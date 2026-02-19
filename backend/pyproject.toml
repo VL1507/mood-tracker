@@ -13,10 +13,13 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "mypy>=1.19.1",
-    "ruff>=0.15.1"
-    ]
+dev = ["mypy>=1.19.1", "ruff>=0.15.1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
 
 [tool.mypy]
 strict = true
