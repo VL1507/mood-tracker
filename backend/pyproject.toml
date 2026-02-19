@@ -8,6 +8,7 @@ dependencies = [
     "dishka>=1.8.0",
     "fastapi>=0.129.0",
     "pydantic>=2.12.5",
+    "pydantic-settings>=2.13.0",
 ]
 
 [dependency-groups]
