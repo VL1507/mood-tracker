@@ -6,6 +6,12 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
 
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "ruff>=0.15.1"
+    ]
+
 [tool.mypy]
 strict = true
 strict_bytes = true
@@ -71,9 +77,4 @@ ignore = [
     "COM812", # ruff warn on it
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
-]
-
-[dependency-groups]
-dev = [
-    "ruff>=0.15.1",
 ]
