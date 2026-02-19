@@ -72,3 +72,8 @@ ignore = [
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.1",
+]
