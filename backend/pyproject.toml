@@ -10,6 +10,7 @@ dependencies = [
     "pydantic[email]>=2.12.5",
     "pydantic-settings>=2.13.0",
     "uvicorn>=0.41.0",
+    "redis>=7.2.0",
 ]
 
 [dependency-groups]
