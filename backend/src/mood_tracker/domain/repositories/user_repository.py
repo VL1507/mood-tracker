@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from mood_tracker.domain.entities.user import User
+from mood_tracker.domain.entities import User
 
 
 class IUserRepository(Protocol):
