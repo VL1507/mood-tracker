@@ -1,7 +1,6 @@
 from mood_tracker.domain.entities import User
-from mood_tracker.domain.repositories.user_repository import IUserRepository
-from mood_tracker.domain.security.password_hasher import IPasswordHasher
-from mood_tracker.domain.security.token_service import ITokenService
+from mood_tracker.domain.repositories import IUserRepository
+from mood_tracker.domain.security import IPasswordHasher, ITokenService
 from mood_tracker.domain.value_objects import (
     HashPassword,
     TokenPair,
