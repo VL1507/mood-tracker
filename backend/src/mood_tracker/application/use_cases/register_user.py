@@ -1,0 +1,45 @@
+from mood_tracker.domain.entities import User
+from mood_tracker.domain.repositories.user_repository import IUserRepository
+from mood_tracker.domain.security.password_hasher import IPasswordHasher
+from mood_tracker.domain.security.token_service import ITokenService
+from mood_tracker.domain.value_objects import (
+    HashPassword,
+    TokenPair,
+    UserEmail,
+    UserID,
+    UserName,
+)
+
+
+class RegisterUserUseCase:
+    def __init__(
+        self,
+        user_repo: IUserRepository,
+        password_hasher: IPasswordHasher,
+        token_service: ITokenService,
+    ) -> None:
+        self.user_repo = user_repo
+        self.password_hasher = password_hasher
+        self.token_service = token_service
+
+    async def __call__(
+        self, username: str, email: str, password: str
+    ) -> TokenPair:
+        if await self.user_repo.exists_by_email(email=UserEmail(email)):
+            raise ValueError("A user with this email is already registered")
+
+        if await self.user_repo.exists_by_name(name=UserName(username)):
+            raise ValueError("A user with this username is already registered")
+
+        hash_password = self.password_hasher.hash_password(
+            plain_password=password
+        )
+        user = User(
+            id=UserID.new(),
+            name=UserName(username),
+            email=UserEmail(email),
+            hash_password=HashPassword(hash_password),
+        )
+        await self.user_repo.save(user=user)
+
+        return self.token_service.generate_token_pair(user_id=user.id)
