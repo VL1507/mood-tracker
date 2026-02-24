@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 
-from mood_tracker.domain.value_objects.hash_password import HashPassword
-from mood_tracker.domain.value_objects.user_email import UserEmail
-from mood_tracker.domain.value_objects.user_id import UserID
-from mood_tracker.domain.value_objects.user_name import UserName
+from mood_tracker.domain.value_objects import (
+    HashPassword,
+    UserEmail,
+    UserID,
+    UserName,
+)
 
 
 @dataclass(slots=True)
