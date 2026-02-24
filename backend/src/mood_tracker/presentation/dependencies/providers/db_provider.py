@@ -1,0 +1,36 @@
+from collections.abc import Iterable
+
+from dishka import Provider, Scope, provide
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+)
+
+from mood_tracker.config import Config
+from mood_tracker.domain.repositories.user_repository import IUserRepository
+from mood_tracker.infrastructure.persistence.repositories import (
+    SQLAlchemyUserRepository,
+)
+from mood_tracker.infrastructure.persistence.session import (
+    new_async_session_maker,
+)
+
+
+class DBProvider(Provider):
+    @provide(scope=Scope.APP)
+    @staticmethod
+    def get_session_maker(config: Config) -> async_sessionmaker[AsyncSession]:
+        return new_async_session_maker(db_config=config.DB)
+
+    @provide(scope=Scope.REQUEST)
+    @staticmethod
+    def get_session(
+        session_maker: async_sessionmaker[AsyncSession],
+    ) -> Iterable[AsyncSession]:
+        with session_maker() as session:
+            yield session
+
+    @provide(scope=Scope.REQUEST)
+    @staticmethod
+    def get_user_repository(session: AsyncSession) -> IUserRepository:
+        return SQLAlchemyUserRepository(session=session)
