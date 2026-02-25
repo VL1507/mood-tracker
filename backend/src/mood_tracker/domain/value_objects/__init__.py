@@ -2,6 +2,5 @@ from .hash_password import HashPassword
 from .token_pair import TokenPair
 from .user_email import UserEmail
 from .user_id import UserID
-from .user_name import UserName
 
-__all__ = ["HashPassword", "TokenPair", "UserEmail", "UserID", "UserName"]
+__all__ = ["HashPassword", "TokenPair", "UserEmail", "UserID"]

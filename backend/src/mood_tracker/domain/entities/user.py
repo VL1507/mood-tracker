@@ -4,14 +4,12 @@ from mood_tracker.domain.value_objects import (
     HashPassword,
     UserEmail,
     UserID,
-    UserName,
 )
 
 
 @dataclass(slots=True)
 class User:
     id: UserID
-    name: UserName
     email: UserEmail
     hash_password: HashPassword
 

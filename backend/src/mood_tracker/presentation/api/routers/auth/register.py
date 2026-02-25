@@ -18,11 +18,9 @@ async def register(
     data: UserRegisterRequest,
     use_case: FromDishka[RegisterUserUseCase],
 ) -> UserRegisterResponse:
-    print(data.name, data.email, data.password)
+    print(data.email, data.password)
 
-    token_pair = await use_case(
-        username=data.name, email=data.email, password=data.password
-    )
+    token_pair = await use_case(email=data.email, password=data.password)
 
     response.set_cookie(
         key="refresh_token",
