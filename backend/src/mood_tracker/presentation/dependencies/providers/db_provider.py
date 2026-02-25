@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from collections.abc import AsyncIterable
 
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import (
@@ -24,10 +24,10 @@ class DBProvider(Provider):
 
     @provide(scope=Scope.REQUEST)
     @staticmethod
-    def get_session(
+    async def get_session(
         session_maker: async_sessionmaker[AsyncSession],
-    ) -> Iterable[AsyncSession]:
-        with session_maker() as session:
+    ) -> AsyncIterable[AsyncSession]:
+        async with session_maker() as session:
             yield session
 
     @provide(scope=Scope.REQUEST)
