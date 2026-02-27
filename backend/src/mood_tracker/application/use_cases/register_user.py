@@ -37,4 +37,4 @@ class RegisterUserUseCase:
         )
         await self.user_repo.save(user=user)
 
-        return self.token_service.generate_token_pair(user_id=user.id)
+        return await self.token_service.generate_token_pair(user_id=user.id)
