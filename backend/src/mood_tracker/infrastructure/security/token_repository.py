@@ -7,12 +7,13 @@ from mood_tracker.domain.value_objects import UserID
 class RedisTokenRepository(ITokenRepository):
     def __init__(self, redis: Redis) -> None:
         self.redis = redis
-        self.refresh_ttl = 30 * 24 * 60 * 60  # TODO: убрать в конфиг
 
-    async def save_refresh(self, user_id: UserID, refresh_token: str) -> None:
+    async def save_refresh(
+        self, user_id: UserID, refresh_token: str, time_seconds: int
+    ) -> None:
         await self.redis.setex(
             name=f"refresh:{user_id.value}:{refresh_token}",
-            time=self.refresh_ttl,
+            time=time_seconds,
             value="1",
         )
 
