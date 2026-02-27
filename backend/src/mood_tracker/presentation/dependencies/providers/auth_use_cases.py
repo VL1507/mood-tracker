@@ -9,7 +9,7 @@ from mood_tracker.domain.security.token_service import ITokenService
 class AuthUseCasesProvider(Provider):
     @provide(scope=Scope.REQUEST)
     @staticmethod
-    def get_user_repository(
+    def get_register_user_use_case(
         user_repo: IUserRepository,
         password_hasher: IPasswordHasher,
         token_service: ITokenService,
