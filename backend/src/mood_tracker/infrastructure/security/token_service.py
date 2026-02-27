@@ -69,7 +69,10 @@ class TokenService(ITokenService):
             return None
         except jwt.InvalidTokenError:
             return None
-        return UserID.from_str(payload.get("sub"))
+        sub = payload.get("sub")
+        if sub is None:
+            return None
+        return UserID.from_str(sub)
 
     async def verify_refresh(
         self, user_id: UserID, refresh_token: str
