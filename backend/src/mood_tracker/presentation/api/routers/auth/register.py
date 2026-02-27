@@ -21,7 +21,6 @@ async def register(
     use_case: FromDishka[RegisterUserUseCase],
     config: FromDishka[Config],
 ) -> UserRegisterResponse:
-    print(data.email, data.password)
 
     token_pair = await use_case(email=data.email, password=data.password)
 
