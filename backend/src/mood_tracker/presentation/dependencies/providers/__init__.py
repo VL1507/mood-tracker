@@ -1,5 +1,5 @@
 from .auth_use_cases import AuthUseCasesProvider
 from .db_provider import DBProvider
-from .redis_provider import RedisProvider
+from .token_provider import TokenProvider
 
-__all__ = ["AuthUseCasesProvider", "DBProvider", "RedisProvider"]
+__all__ = ["AuthUseCasesProvider", "DBProvider", "TokenProvider"]

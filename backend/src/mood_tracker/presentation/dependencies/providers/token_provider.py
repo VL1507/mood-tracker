@@ -4,7 +4,7 @@ from redis.asyncio import Redis
 from mood_tracker.config import Config
 
 
-class RedisProvider(Provider):
+class TokenProvider(Provider):
 
     @provide(scope=Scope.APP)
     @staticmethod
