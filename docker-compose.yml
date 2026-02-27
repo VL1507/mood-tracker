@@ -15,6 +15,10 @@ services:
       REDIS__HOST: redis
       REDIS__PORT: 6379
       REDIS__PASSWORD: ${REDIS__PASSWORD}
+      JWT__ALGORITHM: ${JWT__ALGORITHM}
+      JWT__SECRET_KEY: ${JWT__SECRET_KEY}
+      JWT__ACCESS_EXPIRE_SECONDS: ${JWT__ACCESS_EXPIRE_SECONDS}
+      JWT__REFRESH_EXPIRE_SECONDS: ${JWT__REFRESH_EXPIRE_SECONDS}
     depends_on:
       database:
         condition: service_healthy
