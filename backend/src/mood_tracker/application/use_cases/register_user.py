@@ -20,9 +20,7 @@ class RegisterUserUseCase:
         self.password_hasher = password_hasher
         self.token_service = token_service
 
-    async def __call__(
-        self, email: str, password: str
-    ) -> TokenPair:
+    async def __call__(self, email: str, password: str) -> TokenPair:
         if await self.user_repo.exists_by_email(email=UserEmail(email)):
             # TODO: заменить ошибку
             raise ValueError("A user with this email is already registered")
