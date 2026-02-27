@@ -6,10 +6,14 @@ from mood_tracker.domain.value_objects import UserID
 
 class ITokenRepository(Protocol):
     @abstractmethod
-    def save_refresh(
+    async def save_refresh(
         self, user_id: UserID, refresh_token: str, time_seconds: int
     ) -> None: ...
     @abstractmethod
-    def delete_refresh(self, user_id: UserID, refresh_token: str) -> None: ...
+    async def delete_refresh(
+        self, user_id: UserID, refresh_token: str
+    ) -> None: ...
     @abstractmethod
-    def check_refresh(self, user_id: UserID, refresh_token: str) -> bool: ...
+    async def check_refresh(
+        self, user_id: UserID, refresh_token: str
+    ) -> bool: ...
