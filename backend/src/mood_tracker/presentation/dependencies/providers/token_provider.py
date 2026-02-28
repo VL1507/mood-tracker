@@ -13,7 +13,7 @@ from mood_tracker.infrastructure.security import (
 class TokenProvider(Provider):
     @provide(scope=Scope.APP)
     @staticmethod
-    def get_redis(config: Config) -> Redis[str]:
+    def get_redis(config: Config) -> Redis:
         return Redis(
             host=config.REDIS.HOST,
             port=config.REDIS.PORT,
@@ -23,7 +23,7 @@ class TokenProvider(Provider):
 
     @provide(scope=Scope.REQUEST)
     @staticmethod
-    def get_token_repository(redis: Redis[str]) -> ITokenRepository:
+    def get_token_repository(redis: Redis) -> ITokenRepository:
         return RedisTokenRepository(redis=redis)
 
     @provide(scope=Scope.REQUEST)
