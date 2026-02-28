@@ -28,6 +28,7 @@ async def register(
         secure=False,  # TODO: в проде заменить на True
         httponly=True,
         samesite="lax",  # TODO: возможно стоит изменить
+        path="/api/auth",
     )
 
     return UserRegisterResponse(access_token=token_pair.access)

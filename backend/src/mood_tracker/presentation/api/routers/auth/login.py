@@ -28,6 +28,7 @@ async def login(
         secure=False,  # TODO: в проде заменить на True
         httponly=True,
         samesite="lax",  # TODO: возможно стоит изменить
+        path="/api/auth",
     )
 
     return UserLoginResponse(access_token=token_pair.access)
