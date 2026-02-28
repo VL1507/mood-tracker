@@ -18,6 +18,7 @@ class TokenProvider(Provider):
             host=config.REDIS.HOST,
             port=config.REDIS.PORT,
             password=config.REDIS.PASSWORD,
+            decode_responses=True,
         )
 
     @provide(scope=Scope.REQUEST)
