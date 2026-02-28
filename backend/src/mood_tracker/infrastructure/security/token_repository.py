@@ -90,9 +90,7 @@ class RedisTokenRepository(ITokenRepository):
         for family_id in family_ids:
             refresh = await self.redis.get(f"family:{family_id}")
             if refresh:
-                await self.redis.delete(
-                    f"refresh:{refresh}"
-                )
+                await self.redis.delete(f"refresh:{refresh}")
 
             await self.redis.delete(f"family:{family_id}")
 
