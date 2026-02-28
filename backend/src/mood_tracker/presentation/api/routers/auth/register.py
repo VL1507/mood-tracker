@@ -1,9 +1,7 @@
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Response
 
-from mood_tracker.application.use_cases.register_user import (
-    RegisterUserUseCase,
-)
+from mood_tracker.application.use_cases import RegisterUserUseCase
 from mood_tracker.config import Config
 from mood_tracker.presentation.api.schemas.auth import (
     UserRegisterRequest,
@@ -21,7 +19,6 @@ async def register(
     use_case: FromDishka[RegisterUserUseCase],
     config: FromDishka[Config],
 ) -> UserRegisterResponse:
-
     token_pair = await use_case(email=data.email, password=data.password)
 
     response.set_cookie(
