@@ -17,3 +17,12 @@ where = ["src"]
 
 [tool.setuptools.package-dir]
 "" = "src"
+
+[tool.mypy]
+strict = true
+strict_bytes = true
+local_partial_types = true
+warn_unreachable = true
+explicit_package_bases = true
+mypy_path = ["src"] 
+plugins = ['pydantic.mypy']
