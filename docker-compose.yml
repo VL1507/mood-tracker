@@ -1,0 +1,21 @@
+services:
+  backend:
+    container_name: backend
+    build: ./backend/
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    environment:
+      DB__USER: ${DB__USER}
+      DB__PASSWORD: ${DB__PASSWORD}
+      DB__HOST: database
+      DB__PORT: 5432
+      DB__NAME: ${DB__NAME}
+      REDIS__HOST: redis
+      REDIS__PORT: 6379
+      REDIS__PASSWORD: ${REDIS__PASSWORD}
+      JWT__ALGORITHM: ${JWT__ALGORITHM}
+      JWT__SECRET_KEY: ${JWT__SECRET_KEY}
+      JWT__ACCESS_EXPIRE_SECONDS: ${JWT__ACCESS_EXPIRE_SECONDS}
+      JWT__REFRESH_EXPIRE_SECONDS: ${JWT__REFRESH_EXPIRE_SECONDS}
