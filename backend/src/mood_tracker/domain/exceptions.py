@@ -3,5 +3,4 @@ class DomainError(BaseException): ...
 
 class InvalidEmailError(DomainError):
     def __init__(self, value: str) -> None:
-        self.value = value
         super().__init__(f"Invalid email format: {value!r}")
