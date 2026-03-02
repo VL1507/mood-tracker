@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 class RedisTokenRepository(ITokenRepository):
     def __init__(self, redis: Redis) -> None:
-        self.redis = redis
+        self._redis = redis
 
     async def save_refresh(
         self,
@@ -26,7 +26,7 @@ class RedisTokenRepository(ITokenRepository):
             }
         )
 
-        await self.redis.setex(
+        await self._redis.setex(
             name=f"refresh:{refresh_token}",
             time=time_seconds,
             value=token_data,
@@ -34,7 +34,7 @@ class RedisTokenRepository(ITokenRepository):
 
         await cast(
             "Awaitable[int]",
-            self.redis.sadd(
+            self._redis.sadd(
                 f"refresh_sessions:{user_id.value}",
                 refresh_token,
             ),
@@ -44,7 +44,7 @@ class RedisTokenRepository(ITokenRepository):
         self,
         refresh_token: str,
     ) -> None:
-        value = await self.redis.get(name=f"refresh:{refresh_token}")
+        value = await self._redis.get(name=f"refresh:{refresh_token}")
         value = cast("str | None", value)
         if value is None:
             return
@@ -52,30 +52,30 @@ class RedisTokenRepository(ITokenRepository):
         data: dict[str, str] = json.loads(value)
         user_id = data["user_id"]
 
-        await self.redis.delete(f"refresh:{refresh_token}")
+        await self._redis.delete(f"refresh:{refresh_token}")
         await cast(
             "Awaitable[int]",
-            self.redis.srem(
+            self._redis.srem(
                 f"refresh_sessions:{user_id}",
                 refresh_token,
             ),
         )
 
     async def check_refresh(self, refresh_token: str) -> bool:
-        value = await self.redis.get(name=f"refresh:{refresh_token}")
+        value = await self._redis.get(name=f"refresh:{refresh_token}")
         value = cast("str | None", value)
         return value is not None
 
     async def revoke_all_refresh(self, user_id: UserID) -> None:
         refresh_tokens = await cast(
             "Awaitable[set[str]]",
-            self.redis.smembers(f"refresh_sessions:{user_id.value}"),
+            self._redis.smembers(f"refresh_sessions:{user_id.value}"),
         )
         for refresh_token in refresh_tokens:
-            await self.redis.delete(f"refresh:{refresh_token}")
+            await self._redis.delete(f"refresh:{refresh_token}")
             await cast(
                 "Awaitable[int]",
-                self.redis.srem(
+                self._redis.srem(
                     f"refresh_sessions:{user_id.value}", refresh_token
                 ),
             )
@@ -83,7 +83,7 @@ class RedisTokenRepository(ITokenRepository):
     async def get_user_id_by_refresh(
         self, refresh_token: str
     ) -> UserID | None:
-        value = await self.redis.get(name=f"refresh:{refresh_token}")
+        value = await self._redis.get(name=f"refresh:{refresh_token}")
         value = cast("str | None", value)
         if value is None:
             return None

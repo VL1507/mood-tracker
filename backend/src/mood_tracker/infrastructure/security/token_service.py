@@ -13,31 +13,31 @@ class TokenService(ITokenService):
     def __init__(
         self, token_repository: ITokenRepository, jwt_config: JWT
     ) -> None:
-        self.token_repository = token_repository
-        self.algorithm = jwt_config.ALGORITHM
-        self.secret_key = jwt_config.SECRET_KEY
-        self.access_exp = jwt_config.ACCESS_EXPIRE_SECONDS
-        self.refresh_exp = jwt_config.REFRESH_EXPIRE_SECONDS
+        self._token_repository = token_repository
+        self._algorithm = jwt_config.ALGORITHM
+        self._secret_key = jwt_config.SECRET_KEY
+        self._access_exp = jwt_config.ACCESS_EXPIRE_SECONDS
+        self._refresh_exp = jwt_config.REFRESH_EXPIRE_SECONDS
 
     async def generate_token_pair(self, user_id: UserID) -> TokenPair:
         now = datetime.now(UTC)
         payload = {
             "sub": str(user_id.value),
             "iat": now,
-            "exp": now + timedelta(seconds=self.access_exp),
+            "exp": now + timedelta(seconds=self._access_exp),
         }
         access_token = jwt.encode(
             payload=payload,
-            key=self.secret_key,
-            algorithm=self.algorithm,
+            key=self._secret_key,
+            algorithm=self._algorithm,
         )
 
         refresh_token = str(uuid4())
 
-        await self.token_repository.save_refresh(
+        await self._token_repository.save_refresh(
             user_id=user_id,
             refresh_token=refresh_token,
-            time_seconds=self.refresh_exp,
+            time_seconds=self._refresh_exp,
         )
 
         return TokenPair(access=access_token, refresh=refresh_token)
@@ -46,9 +46,9 @@ class TokenService(ITokenService):
         try:
             jwt.decode(
                 jwt=access_token,
-                key=self.secret_key,
+                key=self._secret_key,
                 algorithms=[
-                    self.algorithm,
+                    self._algorithm,
                 ],
             )
         except jwt.ExpiredSignatureError:
@@ -61,9 +61,9 @@ class TokenService(ITokenService):
         try:
             payload = jwt.decode(
                 jwt=access_token,
-                key=self.secret_key,
+                key=self._secret_key,
                 algorithms=[
-                    self.algorithm,
+                    self._algorithm,
                 ],
             )
         except jwt.ExpiredSignatureError:
@@ -76,19 +76,21 @@ class TokenService(ITokenService):
         return UserID.from_str(sub)
 
     async def verify_refresh(self, refresh_token: str) -> bool:
-        return await self.token_repository.check_refresh(
+        return await self._token_repository.check_refresh(
             refresh_token=refresh_token
         )
 
     async def revoke_refresh(self, refresh_token: str) -> None:
-        await self.token_repository.delete_refresh(refresh_token=refresh_token)
+        await self._token_repository.delete_refresh(
+            refresh_token=refresh_token
+        )
 
     async def revoke_all_refresh(self, user_id: UserID) -> None:
-        await self.token_repository.revoke_all_refresh(user_id=user_id)
+        await self._token_repository.revoke_all_refresh(user_id=user_id)
 
     async def get_user_id_by_refresh(
         self, refresh_token: str
     ) -> UserID | None:
-        return await self.token_repository.get_user_id_by_refresh(
+        return await self._token_repository.get_user_id_by_refresh(
             refresh_token=refresh_token
         )

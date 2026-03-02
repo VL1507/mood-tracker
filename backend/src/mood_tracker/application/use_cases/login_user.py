@@ -13,20 +13,20 @@ class LoginUserUseCase:
         password_hasher: IPasswordHasher,
         token_service: ITokenService,
     ) -> None:
-        self.user_repo = user_repo
-        self.password_hasher = password_hasher
-        self.token_service = token_service
+        self._user_repo = user_repo
+        self._password_hasher = password_hasher
+        self._token_service = token_service
 
     async def __call__(self, email: str, password: str) -> TokenPair:
-        user = await self.user_repo.get_by_email(email=UserEmail(email))
+        user = await self._user_repo.get_by_email(email=UserEmail(email))
         if user is None:
             # TODO: заменить ошибку
             raise ValueError("user not exist")
 
-        if not self.password_hasher.verify_password(
+        if not self._password_hasher.verify_password(
             plain_password=password, hashed_password=user.hash_password.value
         ):
             # TODO: заменить ошибку
             raise ValueError("pwd")
 
-        return await self.token_service.generate_token_pair(user_id=user.id)
+        return await self._token_service.generate_token_pair(user_id=user.id)

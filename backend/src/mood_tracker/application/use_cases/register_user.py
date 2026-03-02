@@ -16,16 +16,16 @@ class RegisterUserUseCase:
         password_hasher: IPasswordHasher,
         token_service: ITokenService,
     ) -> None:
-        self.user_repo = user_repo
-        self.password_hasher = password_hasher
-        self.token_service = token_service
+        self._user_repo = user_repo
+        self._password_hasher = password_hasher
+        self._token_service = token_service
 
     async def __call__(self, email: str, password: str) -> TokenPair:
-        if await self.user_repo.exists_by_email(email=UserEmail(email)):
+        if await self._user_repo.exists_by_email(email=UserEmail(email)):
             # TODO: заменить ошибку
             raise ValueError("A user with this email is already registered")
 
-        hash_password = self.password_hasher.hash_password(
+        hash_password = self._password_hasher.hash_password(
             plain_password=password
         )
         user = User(
@@ -33,6 +33,6 @@ class RegisterUserUseCase:
             email=UserEmail(email),
             hash_password=HashPassword(hash_password),
         )
-        await self.user_repo.save(user=user)
+        await self._user_repo.save(user=user)
 
-        return await self.token_service.generate_token_pair(user_id=user.id)
+        return await self._token_service.generate_token_pair(user_id=user.id)

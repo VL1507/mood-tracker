@@ -4,16 +4,16 @@ from mood_tracker.domain.value_objects import TokenPair
 
 class RefreshUserUseCase:
     def __init__(self, token_service: ITokenService) -> None:
-        self.token_service = token_service
+        self._token_service = token_service
 
     async def __call__(self, refresh_token: str) -> TokenPair:
-        user_id = await self.token_service.get_user_id_by_refresh(
+        user_id = await self._token_service.get_user_id_by_refresh(
             refresh_token=refresh_token
         )
 
         if user_id is None:
             raise ValueError("неверный refresh")
 
-        await self.token_service.revoke_refresh(refresh_token=refresh_token)
+        await self._token_service.revoke_refresh(refresh_token=refresh_token)
 
-        return await self.token_service.generate_token_pair(user_id=user_id)
+        return await self._token_service.generate_token_pair(user_id=user_id)
