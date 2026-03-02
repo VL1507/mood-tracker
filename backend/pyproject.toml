@@ -11,3 +11,9 @@ dev = [
     "mypy>=1.19.1",
     "ruff>=0.15.4",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
