@@ -15,14 +15,12 @@ async def refresh(
     use_case: FromDishka[RefreshUserUseCase],
     config: FromDishka[Config],
     refresh_token: str | None = Cookie(None, alias="refresh_token"),
-) -> None:
+) -> RefreshLoginResponse:
     if not refresh_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Refresh token missing",
         )
-
-    print(refresh_token)
 
     token_pair = await use_case(refresh_token=refresh_token)
 

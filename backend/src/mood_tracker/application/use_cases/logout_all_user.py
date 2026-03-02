@@ -10,5 +10,6 @@ class LogoutAllUserUseCase:
 
         if user_id is None:
             ValueError("проблемы с access")
+            return
 
         await self.token_service.revoke_all_refresh(user_id=user_id)

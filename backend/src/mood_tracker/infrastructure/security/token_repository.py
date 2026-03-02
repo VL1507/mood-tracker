@@ -73,8 +73,11 @@ class RedisTokenRepository(ITokenRepository):
         )
         for refresh_token in refresh_tokens:
             await self.redis.delete(f"refresh:{refresh_token}")
-            await self.redis.srem(
-                f"refresh_sessions:{user_id.value}", refresh_token
+            await cast(
+                "Awaitable[int]",
+                self.redis.srem(
+                    f"refresh_sessions:{user_id.value}", refresh_token
+                ),
             )
 
     async def get_user_id_by_refresh(
