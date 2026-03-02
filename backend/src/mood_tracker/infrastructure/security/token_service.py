@@ -85,3 +85,10 @@ class TokenService(ITokenService):
 
     async def revoke_all_refresh(self, user_id: UserID) -> None:
         await self.token_repository.revoke_all_refresh(user_id=user_id)
+
+    async def get_user_id_by_refresh(
+        self, refresh_token: str
+    ) -> UserID | None:
+        return await self.token_repository.get_user_id_by_refresh(
+            refresh_token=refresh_token
+        )
