@@ -33,13 +33,11 @@ class TokenService(ITokenService):
         )
 
         refresh_token = str(uuid4())
-        family_id = str(uuid4())
 
         await self.token_repository.save_refresh(
             user_id=user_id,
             refresh_token=refresh_token,
             time_seconds=self.refresh_exp,
-            family_id=family_id,
         )
 
         return TokenPair(access=access_token, refresh=refresh_token)
@@ -78,24 +76,12 @@ class TokenService(ITokenService):
         return UserID.from_str(sub)
 
     async def verify_refresh(self, refresh_token: str) -> bool:
-        family_id = await self.token_repository.get_family_by_refresh(
+        return await self.token_repository.check_refresh(
             refresh_token=refresh_token
         )
-        if family_id is None:
-            return False
-
-        current_token = await self.token_repository.get_last_in_family(
-            family_id=family_id
-        )
-        if current_token is None:
-            return False
-
-        return current_token == refresh_token
 
     async def revoke_refresh(self, refresh_token: str) -> None:
         await self.token_repository.delete_refresh(refresh_token=refresh_token)
 
-    async def revoke_all_refresh(self, refresh_token: str) -> None:
-        await self.token_repository.revoke_all_refresh(
-            refresh_token=refresh_token
-        )
+    async def revoke_all_refresh(self, user_id: UserID) -> None:
+        await self.token_repository.revoke_all_refresh(user_id=user_id)
