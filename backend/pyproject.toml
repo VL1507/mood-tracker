@@ -26,3 +26,62 @@ warn_unreachable = true
 explicit_package_bases = true
 mypy_path = ["src"] 
 plugins = ['pydantic.mypy']
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+preview = true
+select = [
+    "ERA",   # eradicate
+    "YTT",   # flake8-2020
+    "ANN",   # flake8-annotations
+    "ASYNC", # flake8-async
+    "S",     # flake8-bandit
+    "BLE",   # flake8-blind-except
+    "FBT",   # flake8-boolean-trap
+    "B",     # flake8-bugbear
+    "A",     # flake8-builtins
+    "COM",   # flake8-commas
+    "C4",    # flake8-comprehensions
+    "DTZ",   # flake8-datetimez
+    "T10",   # flake8-debugger
+    "ISC",   # flake8-implicit-str-concat
+    "ICN",   # flake8-import-conventions
+    "LOG",   # flake8-logging
+    "G",     # flake8-logging-format
+    "INP",   # flake8-no-pep420
+    "PIE",   # flake8-pie
+    "T20",   # flake8-print
+    "PYI",   # flake8-pyi
+    "PT",    # flake8-pytest-style
+    "Q",     # flake8-quotes
+    "RSE",   # flake8-raise
+    "RET",   # flake8-return
+    "SLF",   # flake8-self 
+    "SLF",   # flake8-self
+    "SIM",   # flake8-simplify
+    "TID",   # flake8-tidy-imports
+    "TD",    # flake8-todos
+    "TC",    # flake8-type-checking
+    "ARG",   # flake8-unused-arguments
+    "PTH",   # flake8-use-pathlib
+    "I",     # isort
+    "C90",   # mccabe    
+    "N",     # pep8-naming
+    "PERF",  # perflint
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "PGH",   # pygrep-hooks
+    "PL",    # pylint
+    "UP",    # pyupgrade
+    "FURB",  # refurb
+    "RUF",   # ruff
+    "TRY",   # tryceratops
+]
+ignore = [
+    "COM812", # ruff warn on it
+    "S101",   # triggers on asserts in tests
+    "TRY003", # imho  adding factories to some exceptions is too much
+]
