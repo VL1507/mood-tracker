@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Literal, Protocol
+from typing import Protocol
 
 from mood_tracker.domain.value_objects import TokenPair, UserID
 
