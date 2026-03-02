@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from . import login, logout, refresh, register
+from . import login, logout, logout_all, refresh, register
 
 
 def setup_routers(app: APIRouter) -> None:
@@ -8,6 +8,7 @@ def setup_routers(app: APIRouter) -> None:
 
     router.include_router(login.router)
     router.include_router(logout.router)
+    router.include_router(logout_all.router)
     router.include_router(refresh.router)
     router.include_router(register.router)
 
