@@ -1,10 +1,14 @@
 from typing import Annotated
 
 from dishka.integrations.fastapi import FromDishka, inject
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from mood_tracker.application.use_cases import LogoutAllUserUseCase
+from mood_tracker.infrastructure.exceptions import (
+    InvalidTokenError,
+    TokenExpiredError,
+)
 from mood_tracker.presentation.api.cookie_service import CookieService
 
 router = APIRouter()
@@ -23,4 +27,17 @@ async def logout_all(
 
     cookie_service.delete_refresh_token(response=response)
 
-    await use_case(access_token=access_token)
+    try:
+        await use_case(access_token=access_token)
+    except TokenExpiredError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expired",
+            headers={"WWW-Authenticate": "Bearer"},
+        ) from e
+    except InvalidTokenError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+            headers={"WWW-Authenticate": "Bearer"},
+        ) from e

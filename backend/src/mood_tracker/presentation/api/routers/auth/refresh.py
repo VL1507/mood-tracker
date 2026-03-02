@@ -1,6 +1,7 @@
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Cookie, HTTPException, Response, status
 
+from mood_tracker.application.exceptions import InvalidRefreshTokenError
 from mood_tracker.application.use_cases import RefreshUserUseCase
 from mood_tracker.presentation.api.cookie_service import CookieService
 from mood_tracker.presentation.api.schemas.auth import RefreshLoginResponse
@@ -22,7 +23,13 @@ async def refresh(
             detail="Refresh token missing",
         )
 
-    token_pair = await use_case(refresh_token=refresh_token)
+    try:
+        token_pair = await use_case(refresh_token=refresh_token)
+    except InvalidRefreshTokenError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid refresh token",
+        ) from e
 
     cookie_service.set_refresh_token(
         response=response, token=token_pair.refresh

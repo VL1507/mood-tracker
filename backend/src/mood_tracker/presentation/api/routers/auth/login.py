@@ -1,6 +1,7 @@
 from dishka.integrations.fastapi import FromDishka, inject
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, HTTPException, Response, status
 
+from mood_tracker.application.exceptions import InvalidCredentialsError
 from mood_tracker.application.use_cases import LoginUserUseCase
 from mood_tracker.presentation.api.cookie_service import CookieService
 from mood_tracker.presentation.api.schemas.auth import (
@@ -22,7 +23,13 @@ async def login(
     use_case: FromDishka[LoginUserUseCase],
     cookie_service: FromDishka[CookieService],
 ) -> UserLoginResponse:
-    token_pair = await use_case(email=data.email, password=data.password)
+    try:
+        token_pair = await use_case(email=data.email, password=data.password)
+    except InvalidCredentialsError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid login or password",
+        ) from e
 
     cookie_service.set_refresh_token(
         response=response, token=token_pair.refresh

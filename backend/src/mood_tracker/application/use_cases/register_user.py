@@ -1,3 +1,4 @@
+from mood_tracker.application.exceptions import EmailAlreadyExistsError
 from mood_tracker.domain.entities import User
 from mood_tracker.domain.repositories import IUserRepository
 from mood_tracker.domain.security import IPasswordHasher, ITokenService
@@ -22,8 +23,7 @@ class RegisterUserUseCase:
 
     async def __call__(self, email: str, password: str) -> TokenPair:
         if await self._user_repo.exists_by_email(email=UserEmail(email)):
-            # TODO: заменить ошибку
-            raise ValueError("A user with this email is already registered")
+            raise EmailAlreadyExistsError
 
         hash_password = self._password_hasher.hash_password(
             plain_password=password

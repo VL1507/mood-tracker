@@ -1,6 +1,7 @@
 from dishka.integrations.fastapi import FromDishka, inject
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, HTTPException, Response, status
 
+from mood_tracker.application.exceptions import EmailAlreadyExistsError
 from mood_tracker.application.use_cases import RegisterUserUseCase
 from mood_tracker.presentation.api.cookie_service import CookieService
 from mood_tracker.presentation.api.schemas.auth import (
@@ -19,7 +20,13 @@ async def register(
     use_case: FromDishka[RegisterUserUseCase],
     cookie_service: FromDishka[CookieService],
 ) -> UserRegisterResponse:
-    token_pair = await use_case(email=data.email, password=data.password)
+    try:
+        token_pair = await use_case(email=data.email, password=data.password)
+    except EmailAlreadyExistsError as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A user with this email is already registered",
+        ) from e
 
     cookie_service.set_refresh_token(
         response=response, token=token_pair.refresh

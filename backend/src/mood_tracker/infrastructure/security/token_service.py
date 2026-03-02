@@ -7,6 +7,11 @@ from mood_tracker.config import JWT
 from mood_tracker.domain.repositories import ITokenRepository
 from mood_tracker.domain.security import ITokenService
 from mood_tracker.domain.value_objects import TokenPair, UserID
+from mood_tracker.infrastructure.exceptions import (
+    InvalidTokenError,
+    TokenExpiredError,
+    UserIDNotInTokenError,
+)
 
 
 class TokenService(ITokenService):
@@ -42,22 +47,7 @@ class TokenService(ITokenService):
 
         return TokenPair(access=access_token, refresh=refresh_token)
 
-    def verify_access(self, access_token: str) -> bool:
-        try:
-            jwt.decode(
-                jwt=access_token,
-                key=self._secret_key,
-                algorithms=[
-                    self._algorithm,
-                ],
-            )
-        except jwt.ExpiredSignatureError:
-            return False
-        except jwt.InvalidTokenError:
-            return False
-        return True
-
-    def decode_access(self, access_token: str) -> UserID | None:
+    def decode_access(self, access_token: str) -> UserID:
         try:
             payload = jwt.decode(
                 jwt=access_token,
@@ -66,13 +56,15 @@ class TokenService(ITokenService):
                     self._algorithm,
                 ],
             )
-        except jwt.ExpiredSignatureError:
-            return None
-        except jwt.InvalidTokenError:
-            return None
-        sub = payload.get("sub")
+        except jwt.ExpiredSignatureError as e:
+            raise TokenExpiredError from e
+        except jwt.InvalidTokenError as e:
+            raise InvalidTokenError from e
+
+        sub: str | None = payload.get("sub")
         if sub is None:
-            return None
+            raise UserIDNotInTokenError
+
         return UserID.from_str(sub)
 
     async def verify_refresh(self, refresh_token: str) -> bool:
