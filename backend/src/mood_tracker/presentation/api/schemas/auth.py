@@ -17,3 +17,7 @@ class UserLoginRequest(BaseModel):
 
 class UserLoginResponse(BaseModel):
     access_token: str
+
+
+class RefreshLoginResponse(BaseModel):
+    access_token: str
