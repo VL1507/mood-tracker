@@ -2,6 +2,7 @@ from dishka import Provider, Scope, provide
 
 from mood_tracker.application.use_cases import (
     LoginUserUseCase,
+    LogoutAllUserUseCase,
     LogoutUserUseCase,
     RefreshUserUseCase,
     RegisterUserUseCase,
@@ -53,5 +54,14 @@ class AuthUseCasesProvider(Provider):
         token_service: ITokenService,
     ) -> RefreshUserUseCase:
         return RefreshUserUseCase(
+            token_service=token_service,
+        )
+
+    @provide(scope=Scope.REQUEST)
+    @staticmethod
+    def get_logout_all_user_use_case(
+        token_service: ITokenService,
+    ) -> LogoutAllUserUseCase:
+        return LogoutAllUserUseCase(
             token_service=token_service,
         )
