@@ -5,6 +5,7 @@ from mood_tracker.config import Config
 
 from .providers import (
     AuthUseCasesProvider,
+    CookieServiceProvider,
     DBProvider,
     PasswordHasherProvider,
     TokenProvider,
@@ -17,6 +18,7 @@ def make_container_di(config: Config) -> AsyncContainer:
         TokenProvider(),
         PasswordHasherProvider(),
         AuthUseCasesProvider(),
+        CookieServiceProvider(),
         FastapiProvider(),
         context={Config: config},
     )
