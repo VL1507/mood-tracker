@@ -1,5 +1,5 @@
 from dishka.integrations.fastapi import FromDishka, inject
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, status
 
 from mood_tracker.application.use_cases import RegisterUserUseCase
 from mood_tracker.presentation.api.cookie_service import CookieService
@@ -11,7 +11,7 @@ from mood_tracker.presentation.api.schemas.auth import (
 router = APIRouter()
 
 
-@router.post("/register")
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 @inject
 async def register(
     response: Response,

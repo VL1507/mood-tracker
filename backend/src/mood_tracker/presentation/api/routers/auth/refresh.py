@@ -8,7 +8,7 @@ from mood_tracker.presentation.api.schemas.auth import RefreshLoginResponse
 router = APIRouter()
 
 
-@router.post("/refresh")
+@router.post("/refresh", status_code=status.HTTP_200_OK)
 @inject
 async def refresh(
     response: Response,
