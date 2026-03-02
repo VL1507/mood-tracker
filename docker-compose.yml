@@ -19,3 +19,29 @@ services:
       JWT__SECRET_KEY: ${JWT__SECRET_KEY}
       JWT__ACCESS_EXPIRE_SECONDS: ${JWT__ACCESS_EXPIRE_SECONDS}
       JWT__REFRESH_EXPIRE_SECONDS: ${JWT__REFRESH_EXPIRE_SECONDS}
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:18-alpine
+    container_name: database
+    environment:
+      POSTGRES_DB: ${DB__NAME}
+      POSTGRES_USER: ${DB__USER}
+      POSTGRES_PASSWORD: ${DB__PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d:ro
+      - database_data:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB__USER} -d ${DB__NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  database_data:
