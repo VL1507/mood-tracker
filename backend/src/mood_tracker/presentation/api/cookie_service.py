@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Literal
 
 from fastapi import Response
 
@@ -6,21 +7,21 @@ from mood_tracker.config import Config
 
 
 @dataclass(frozen=True)
-class CookieConfig:
+class RefreshCookieConfig:
     key: str
     max_age: int
     secure: bool
     httponly: bool = True
-    samesite: str = "lax"  # TODO: возможно стоит изменить
+    samesite: Literal["lax", "strict", "none"] | None = "lax"
     path: str = "/api/auth"
 
 
 class CookieService:
     def __init__(self, config: Config) -> None:
-        self._refresh_config = CookieConfig(
+        self._refresh_config = RefreshCookieConfig(
             key="refresh_token",
             max_age=config.JWT.REFRESH_EXPIRE_SECONDS,
-            secure=False,  # TODO: брать из конфига
+            secure=True,
         )
 
     def set_refresh_token(self, response: Response, token: str) -> None:
