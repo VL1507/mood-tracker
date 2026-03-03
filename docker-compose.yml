@@ -4,8 +4,6 @@ services:
     build: ./backend/
     ports:
       - "8000:8000"
-    expose:
-      - "8000"
     environment:
       DB__USER: ${DB__USER}
       DB__PASSWORD: ${DB__PASSWORD}
