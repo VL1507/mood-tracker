@@ -33,7 +33,7 @@ services:
       POSTGRES_USER: ${DB__USER}
       POSTGRES_PASSWORD: ${DB__PASSWORD}
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d:ro
       - database_data:/var/lib/postgresql
@@ -49,7 +49,7 @@ services:
     image: redis:7-alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --requirepass "${REDIS__PASSWORD}"
