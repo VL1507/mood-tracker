@@ -57,8 +57,8 @@ services:
       test: [ "CMD-SHELL", "REDISCLI_AUTH=${REDIS__PASSWORD} redis-cli ping | grep PONG" ]
       interval: 10s
       timeout: 5s
-      retries: 20
-      start_period: 30s
+      retries: 10
+      start_period: 10s
       start_interval: 5s
     restart: unless-stopped
 
