@@ -4,17 +4,17 @@ services:
     build: ./backend/
     ports:
       - "8000:8000"
-    expose:
-      - "8000"
     environment:
       DB__USER: ${DB__USER}
       DB__PASSWORD: ${DB__PASSWORD}
       DB__HOST: database
       DB__PORT: 5432
       DB__NAME: ${DB__NAME}
+
       REDIS__HOST: redis
       REDIS__PORT: 6379
       REDIS__PASSWORD: ${REDIS__PASSWORD}
+      
       JWT__ALGORITHM: ${JWT__ALGORITHM}
       JWT__SECRET_KEY: ${JWT__SECRET_KEY}
       JWT__ACCESS_EXPIRE_SECONDS: ${JWT__ACCESS_EXPIRE_SECONDS}
@@ -33,7 +33,7 @@ services:
       POSTGRES_USER: ${DB__USER}
       POSTGRES_PASSWORD: ${DB__PASSWORD}
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d:ro
       - database_data:/var/lib/postgresql
@@ -49,16 +49,20 @@ services:
     image: redis:7-alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
-    command: redis-server --requirepass "${REDIS__PASSWORD}"
+    command: >
+      redis-server
+      --requirepass "${REDIS__PASSWORD}"
+      --appendonly yes 
+      --appendfsync everysec
     healthcheck:
       test: [ "CMD-SHELL", "REDISCLI_AUTH=${REDIS__PASSWORD} redis-cli ping | grep PONG" ]
       interval: 10s
       timeout: 5s
-      retries: 20
-      start_period: 30s
+      retries: 10
+      start_period: 10s
       start_interval: 5s
     restart: unless-stopped
 
