@@ -38,4 +38,4 @@ class RegisterUserUseCase:
         )
         await self._user_repo.save(user=user)
 
-        return await self._token_service.create_session(user_id=user.id)
+        return await self._token_service.create_token_pair(user_id=user.id)
