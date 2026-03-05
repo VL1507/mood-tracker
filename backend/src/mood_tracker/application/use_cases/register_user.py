@@ -48,5 +48,5 @@ class RegisterUserUseCase:
 
         return RegisterUserOutputDTO(
             access_token=token_pair.access,
-            refresh_token=str(token_pair.refresh),
+            refresh_token=token_pair.refresh,
         )
