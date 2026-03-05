@@ -20,4 +20,4 @@ class UserORM(Base):
     email: Mapped[str] = mapped_column(
         String(255), unique=True, nullable=False
     )
-    hash_password: Mapped[str] = mapped_column(String(255), nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
