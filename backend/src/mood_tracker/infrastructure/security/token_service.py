@@ -1,5 +1,5 @@
 from datetime import UTC, datetime, timedelta
-from uuid import uuid4
+from secrets import token_urlsafe
 
 import jwt
 
@@ -32,7 +32,7 @@ class TokenService(ITokenService):
             algorithm=self._algorithm,
         )
 
-        refresh_token = uuid4()
+        refresh_token = token_urlsafe(32)
 
         await self._token_repository.save_refresh(
             user_id=user_id,
