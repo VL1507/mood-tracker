@@ -7,7 +7,7 @@ from .providers import (
     AuthUseCasesProvider,
     CookieServiceProvider,
     DBProvider,
-    PasswordHasher,
+    PasswordHasherProvider,
     TokenProvider,
 )
 
@@ -17,7 +17,7 @@ def make_container_di(config: Config) -> AsyncContainer:
         AuthUseCasesProvider(),
         CookieServiceProvider(),
         DBProvider(),
-        PasswordHasher(),
+        PasswordHasherProvider(),
         TokenProvider(),
         FastapiProvider(),
         context={Config: config},
