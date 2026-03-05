@@ -32,7 +32,7 @@ class TokenService(ITokenService):
             algorithm=self._algorithm,
         )
 
-        refresh_token = str(uuid4())
+        refresh_token = uuid4()
 
         await self._token_repository.save_refresh(
             user_id=user_id,
