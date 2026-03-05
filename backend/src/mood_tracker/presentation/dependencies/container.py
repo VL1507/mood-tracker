@@ -3,7 +3,12 @@ from dishka.integrations.fastapi import FastapiProvider
 
 from mood_tracker.config import Config
 
-from .providers import CookieServiceProvider, DBProvider, PasswordHasher
+from .providers import (
+    CookieServiceProvider,
+    DBProvider,
+    PasswordHasher,
+    TokenProvider,
+)
 
 
 def make_container_di(config: Config) -> AsyncContainer:
@@ -11,6 +16,7 @@ def make_container_di(config: Config) -> AsyncContainer:
         CookieServiceProvider(),
         DBProvider(),
         PasswordHasher(),
+        TokenProvider(),
         FastapiProvider(),
         context={Config: config},
     )

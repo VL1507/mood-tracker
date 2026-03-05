@@ -1,5 +1,11 @@
 from .cookie_service import CookieServiceProvider
 from .db_provider import DBProvider
 from .password_hasher import PasswordHasher
+from .token_provider import TokenProvider
 
-__all__ = ["CookieServiceProvider", "DBProvider", "PasswordHasher"]
+__all__ = [
+    "CookieServiceProvider",
+    "DBProvider",
+    "PasswordHasher",
+    "TokenProvider",
+]
