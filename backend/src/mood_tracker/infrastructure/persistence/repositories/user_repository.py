@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from mood_tracker.domain.entities import User
 from mood_tracker.domain.repositories import IUserRepository
-from mood_tracker.domain.value_objects import HashPassword, UserEmail, UserID
+from mood_tracker.domain.value_objects import PasswordHash, UserEmail, UserID
 from mood_tracker.infrastructure.persistence.models import UserORM
 
 
@@ -26,7 +26,7 @@ class UserRepository(IUserRepository):
         user_orm = UserORM()
         user_orm.id = user_domain.id.value
         user_orm.email = user_domain.email.value
-        user_orm.hash_password = user_domain.hash_password.value
+        user_orm.password_hash = user_domain.password_hash.value
         return user_orm
 
     @staticmethod
@@ -34,5 +34,5 @@ class UserRepository(IUserRepository):
         return User(
             id=UserID(user_orm.id),
             email=UserEmail(user_orm.email),
-            hash_password=HashPassword(user_orm.hash_password),
+            password_hash=PasswordHash(user_orm.password_hash),
         )
