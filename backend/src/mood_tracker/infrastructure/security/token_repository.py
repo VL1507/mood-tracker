@@ -1,5 +1,6 @@
 import json
 from typing import TYPE_CHECKING, cast
+from uuid import UUID
 
 from redis.asyncio.client import Redis
 
@@ -17,7 +18,7 @@ class RedisTokenRepository(ITokenRepository):
     async def save_refresh(
         self,
         user_id: UserID,
-        refresh_token: str,
+        refresh_token: UUID,
         time_seconds: int,
     ) -> None:
         token_data = json.dumps(
@@ -36,6 +37,6 @@ class RedisTokenRepository(ITokenRepository):
             "Awaitable[int]",
             self._redis.sadd(
                 f"refresh_sessions:{user_id.value}",
-                refresh_token,
+                str(refresh_token),
             ),
         )
