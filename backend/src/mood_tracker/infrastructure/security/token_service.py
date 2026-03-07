@@ -41,3 +41,15 @@ class TokenService(ITokenService):
         )
 
         return TokenPair(access=access_token, refresh=refresh_token)
+
+    async def get_user_id_by_refresh(
+        self, refresh_token: str
+    ) -> UserID | None:
+        return await self._token_repository.get_user_id_by_refresh(
+            refresh_token=refresh_token
+        )
+
+    async def revoke_refresh(self, refresh_token: str) -> None:
+        await self._token_repository.delete_refresh(
+            refresh_token=refresh_token
+        )
