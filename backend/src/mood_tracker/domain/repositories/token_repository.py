@@ -12,3 +12,12 @@ class ITokenRepository(Protocol):
         refresh_token: str,
         time_seconds: int,
     ) -> None: ...
+    @abstractmethod
+    async def get_user_id_by_refresh(
+        self, refresh_token: str
+    ) -> UserID | None: ...
+    @abstractmethod
+    async def delete_refresh(
+        self,
+        refresh_token: str,
+    ) -> None: ...
