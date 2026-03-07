@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from mood_tracker.application.exceptions import EmailAlreadyExistsError
+from mood_tracker.application.exceptions import (
+    EmailAlreadyExistsError,
+    InvalidCredentialsError,
+)
 
 
 def email_already_exists_handler(
@@ -14,7 +17,20 @@ def email_already_exists_handler(
     )
 
 
+def invalid_credentials_handler(
+    request: Request,  # noqa: ARG001
+    exc: Exception,  # noqa: ARG001
+) -> JSONResponse:
+    return JSONResponse(
+        content={"detail": "Invalid login or password"},
+        status_code=status.HTTP_401_UNAUTHORIZED,
+    )
+
+
 def setup_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(
         EmailAlreadyExistsError, email_already_exists_handler
+    )
+    app.add_exception_handler(
+        InvalidCredentialsError, invalid_credentials_handler
     )

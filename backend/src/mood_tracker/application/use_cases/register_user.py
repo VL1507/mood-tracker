@@ -25,19 +25,19 @@ class RegisterUserUseCase:
         self._token_service = token_service
 
     async def __call__(
-        self, context: RegisterUserInputDTO
+        self, input_dto: RegisterUserInputDTO
     ) -> RegisterUserOutputDTO:
         if await self._user_repo.exists_by_email(
-            email=UserEmail(context.email)
+            email=UserEmail(input_dto.email)
         ):
             raise EmailAlreadyExistsError
 
         password_hash = self._password_hasher.hash_password(
-            password=context.password
+            password=input_dto.password
         )
         user = User(
             id=UserID.new(),
-            email=UserEmail(context.email),
+            email=UserEmail(input_dto.email),
             password_hash=PasswordHash(password_hash),
         )
         await self._user_repo.save(user=user)

@@ -21,6 +21,14 @@ class UserRepository(IUserRepository):
         result = await self._session.execute(stmt)
         return result.scalar_one_or_none() is not None
 
+    async def get_by_email(self, email: UserEmail) -> User | None:
+        stmt = select(UserORM).where(UserORM.email == email.value)
+        result = await self._session.execute(stmt)
+        user_orm = result.scalar()
+        if user_orm is None:
+            return None
+        return self._orm_to_domain(user_orm=user_orm)
+
     @staticmethod
     def _domain_to_orm(user_domain: User) -> UserORM:
         user_orm = UserORM()
