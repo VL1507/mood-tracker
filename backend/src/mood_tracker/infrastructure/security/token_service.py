@@ -40,4 +40,6 @@ class TokenService(ITokenService):
             time_seconds=self._refresh_exp,
         )
 
-        return TokenPair(access=access_token, refresh=refresh_token)
+        return TokenPair(
+            access_token=access_token, refresh_token=refresh_token
+        )
