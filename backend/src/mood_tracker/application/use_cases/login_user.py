@@ -22,7 +22,7 @@ class LoginUserUseCase:
     async def __call__(
         self, input_dto: LoginUserInputDTO
     ) -> LoginUserOutputDTO:
-        user = await self._user_repo.get_by_email(
+        user = await self._user_repo.get_user_by_email(
             email=UserEmail(input_dto.email)
         )
         if user is None:

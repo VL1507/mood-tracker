@@ -21,7 +21,7 @@ class UserRepository(IUserRepository):
         result = await self._session.execute(stmt)
         return result.scalar_one_or_none() is not None
 
-    async def get_by_email(self, email: UserEmail) -> User | None:
+    async def get_user_by_email(self, email: UserEmail) -> User | None:
         stmt = select(UserORM).where(UserORM.email == email.value)
         result = await self._session.execute(stmt)
         user_orm = result.scalar()
