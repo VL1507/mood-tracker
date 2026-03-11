@@ -13,13 +13,13 @@ class RefreshUserUseCase:
     async def __call__(
         self, input_dto: RefreshUserInputDTO
     ) -> RefreshUserOutputDTO:
-        user_id = await self._token_service.get_user_id_by_refresh(
+        user_id = await self._token_service.get_user_id_by_refresh_token(
             refresh_token=input_dto.refresh_token
         )
         if user_id is None:
             raise InvalidRefreshTokenError
 
-        await self._token_service.revoke_refresh(
+        await self._token_service.revoke_refresh_token(
             refresh_token=input_dto.refresh_token
         )
 
