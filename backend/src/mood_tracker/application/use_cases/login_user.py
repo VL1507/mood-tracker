@@ -22,6 +22,20 @@ class LoginUserUseCase:
     async def __call__(
         self, input_dto: LoginUserInputDTO
     ) -> LoginUserOutputDTO:
+        """Проверяет пользователя по почте и паролю, создает и возвращает новую
+        пару токенов
+
+        Args:
+            input_dto (LoginUserInputDTO): dto содержащие почту и пароль
+            пользователя
+
+        Raises:
+            InvalidCredentialsError: отсутствие пользователя с данной почтой
+            InvalidCredentialsError: неверный пароль
+
+        Returns:
+            LoginUserOutputDTO: содержит новые access_token и refresh_token
+        """  # noqa: RUF002
         user = await self._user_repo.get_user_by_email(
             email=UserEmail(input_dto.email)
         )
