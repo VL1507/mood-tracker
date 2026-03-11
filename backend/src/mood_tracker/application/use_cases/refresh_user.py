@@ -28,5 +28,6 @@ class RefreshUserUseCase:
         )
 
         return RefreshUserOutputDTO(
-            access_token=token_pair.access, refresh_token=token_pair.refresh
+            access_token=token_pair.access_token,
+            refresh_token=token_pair.refresh_token,
         )
