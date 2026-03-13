@@ -34,10 +34,24 @@ class TokenService(ITokenService):
 
         refresh_token = token_urlsafe(32)
 
-        await self._token_repository.save_refresh(
+        await self._token_repository.save_refresh_token(
             user_id=user_id,
             refresh_token=refresh_token,
             time_seconds=self._refresh_exp,
         )
 
-        return TokenPair(access=access_token, refresh=refresh_token)
+        return TokenPair(
+            access_token=access_token, refresh_token=refresh_token
+        )
+
+    async def get_user_id_by_refresh_token(
+        self, refresh_token: str
+    ) -> UserID | None:
+        return await self._token_repository.get_user_id_by_refresh_token(
+            refresh_token=refresh_token
+        )
+
+    async def revoke_refresh_token(self, refresh_token: str) -> None:
+        await self._token_repository.delete_refresh_token(
+            refresh_token=refresh_token
+        )

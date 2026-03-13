@@ -4,6 +4,7 @@ from typing import Literal
 from fastapi import Response
 
 from mood_tracker.config import Config
+from mood_tracker.constants import REFRESH_TOKEN_COOKIE_NAME
 
 
 @dataclass(frozen=True)
@@ -19,7 +20,7 @@ class RefreshCookieConfig:
 class CookieService:
     def __init__(self, config: Config) -> None:
         self._refresh_config = RefreshCookieConfig(
-            key="refresh_token",
+            key=REFRESH_TOKEN_COOKIE_NAME,
             max_age=config.JWT.REFRESH_EXPIRE_SECONDS,
             secure=True,
         )
