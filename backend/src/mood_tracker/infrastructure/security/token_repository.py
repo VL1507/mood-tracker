@@ -14,7 +14,7 @@ class RedisTokenRepository(ITokenRepository):
     def __init__(self, redis: Redis) -> None:
         self._redis = redis
 
-    async def save_refresh(
+    async def save_refresh_token(
         self,
         user_id: UserID,
         refresh_token: str,
@@ -36,6 +36,39 @@ class RedisTokenRepository(ITokenRepository):
             "Awaitable[int]",
             self._redis.sadd(
                 f"refresh_sessions:{user_id.value}",
+                refresh_token,
+            ),
+        )
+
+    async def get_user_id_by_refresh_token(
+        self, refresh_token: str
+    ) -> UserID | None:
+        value = await self._redis.get(name=f"refresh:{refresh_token}")
+        value = cast("str | None", value)
+        if value is None:
+            return None
+
+        data: dict[str, str] = json.loads(value)
+        user_id_str = data["user_id"]
+        return UserID.from_str(user_id_str)
+
+    async def delete_refresh_token(
+        self,
+        refresh_token: str,
+    ) -> None:
+        value = await self._redis.get(name=f"refresh:{refresh_token}")
+        value = cast("str | None", value)
+        if value is None:
+            return
+
+        data: dict[str, str] = json.loads(value)
+        user_id = data["user_id"]
+
+        await self._redis.delete(f"refresh:{refresh_token}")
+        await cast(
+            "Awaitable[int]",
+            self._redis.srem(
+                f"refresh_sessions:{user_id}",
                 refresh_token,
             ),
         )
