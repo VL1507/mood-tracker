@@ -25,19 +25,32 @@ class RegisterUserUseCase:
         self._token_service = token_service
 
     async def __call__(
-        self, context: RegisterUserInputDTO
+        self, input_dto: RegisterUserInputDTO
     ) -> RegisterUserOutputDTO:
+        """Проверяет зарегистрирован ли уже такой пользователь,
+
+        Args:
+            input_dto (RegisterUserInputDTO): dto со всей информацией для
+            регистрации нового пользователя
+
+        Raises:
+            EmailAlreadyExistsError: пользователь с данным email уже
+            зарегистрирован
+
+        Returns:
+            RegisterUserOutputDTO: содержит access_token и refresh_token
+        """  # noqa: RUF002
         if await self._user_repo.exists_by_email(
-            email=UserEmail(context.email)
+            email=UserEmail(input_dto.email)
         ):
             raise EmailAlreadyExistsError
 
         password_hash = self._password_hasher.hash_password(
-            password=context.password
+            password=input_dto.password
         )
         user = User(
             id=UserID.new(),
-            email=UserEmail(context.email),
+            email=UserEmail(input_dto.email),
             password_hash=PasswordHash(password_hash),
         )
         await self._user_repo.save(user=user)
@@ -47,6 +60,6 @@ class RegisterUserUseCase:
         )
 
         return RegisterUserOutputDTO(
-            access_token=token_pair.access,
-            refresh_token=token_pair.refresh,
+            access_token=token_pair.access_token,
+            refresh_token=token_pair.refresh_token,
         )

@@ -3,5 +3,5 @@ from dataclasses import dataclass
 
 @dataclass(slots=True, frozen=True)
 class TokenPair:
-    access: str
-    refresh: str
+    access_token: str
+    refresh_token: str
