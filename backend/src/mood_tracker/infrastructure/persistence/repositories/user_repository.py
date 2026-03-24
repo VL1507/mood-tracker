@@ -16,7 +16,7 @@ class UserRepository(IUserRepository):
         self._session.add(user_orm)
         await self._session.commit()
 
-    async def exists_by_email(self, email: UserEmail) -> bool:
+    async def user_exists_by_email(self, email: UserEmail) -> bool:
         stmt = select(UserORM).where(UserORM.email == email.value)
         result = await self._session.execute(stmt)
         return result.scalar_one_or_none() is not None
