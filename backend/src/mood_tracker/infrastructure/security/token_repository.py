@@ -18,7 +18,7 @@ class RedisTokenRepository(ITokenRepository):
         self,
         user_id: UserID,
         refresh_token: str,
-        time_seconds: int,
+        ttl_seconds: int,
     ) -> None:
         token_data = json.dumps(
             {
@@ -26,19 +26,17 @@ class RedisTokenRepository(ITokenRepository):
             }
         )
 
-        await self._redis.setex(
-            name=f"refresh:{refresh_token}",
-            time=time_seconds,
-            value=token_data,
-        )
-
-        await cast(
-            "Awaitable[int]",
-            self._redis.sadd(
-                f"refresh_sessions:{user_id.value}",
-                refresh_token,
-            ),
-        )
+        async with self._redis.pipeline(transaction=True) as pipe:
+            await pipe.setex(
+                name=f"refresh:{refresh_token}",
+                time=ttl_seconds,
+                value=token_data,
+            )
+            await cast(
+                "Awaitable[int]",
+                pipe.sadd(f"refresh_sessions:{user_id.value}", refresh_token),
+            )
+            await pipe.execute()
 
     async def get_user_id_by_refresh_token(
         self, refresh_token: str
@@ -56,19 +54,19 @@ class RedisTokenRepository(ITokenRepository):
         self,
         refresh_token: str,
     ) -> None:
-        value = await self._redis.get(name=f"refresh:{refresh_token}")
-        value = cast("str | None", value)
-        if value is None:
+        user_id = await self.get_user_id_by_refresh_token(
+            refresh_token=refresh_token
+        )
+        if user_id is None:
             return
 
-        data: dict[str, str] = json.loads(value)
-        user_id = data["user_id"]
-
-        await self._redis.delete(f"refresh:{refresh_token}")
-        await cast(
-            "Awaitable[int]",
-            self._redis.srem(
-                f"refresh_sessions:{user_id}",
-                refresh_token,
-            ),
-        )
+        async with self._redis.pipeline(transaction=True) as pipe:
+            await pipe.delete(f"refresh:{refresh_token}")
+            await cast(
+                "Awaitable[int]",
+                pipe.srem(
+                    f"refresh_sessions:{user_id.value}",
+                    refresh_token,
+                ),
+            )
+            await pipe.execute()
