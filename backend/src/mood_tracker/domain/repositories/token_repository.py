@@ -10,12 +10,15 @@ class ITokenRepository(Protocol):
         self,
         user_id: UserID,
         refresh_token: str,
-        time_seconds: int,
+        ttl_seconds: int,
     ) -> None: ...
     @abstractmethod
     async def get_user_id_by_refresh_token(
         self, refresh_token: str
-    ) -> UserID | None: ...
+    ) -> UserID | None:
+        """None если токен не найден или истёк."""
+        ...
+
     @abstractmethod
     async def delete_refresh_token(
         self,

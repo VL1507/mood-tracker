@@ -6,6 +6,11 @@ from mood_tracker.domain.exceptions import InvalidEmailError
 
 @dataclass(slots=True, frozen=True)
 class UserEmail:
+    """
+    Raises:
+        InvalidEmailError: невалидный формат email
+    """
+
     value: str
 
     def __post_init__(self) -> None:
