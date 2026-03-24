@@ -30,7 +30,8 @@ class DBProvider(Provider):
         async with session_maker() as session:
             yield session
 
-    @provide(scope=Scope.REQUEST)
-    @staticmethod
-    def get_user_repository(session: AsyncSession) -> IUserRepository:
-        return UserRepository(session=session)
+    user_repository = provide(
+        UserRepository,
+        scope=Scope.REQUEST,
+        provides=IUserRepository,
+    )
