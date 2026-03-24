@@ -12,7 +12,11 @@ from mood_tracker.presentation.api.schemas.auth import (
 router = APIRouter()
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    status_code=status.HTTP_201_CREATED,
+    summary="Регистрация пользователя",
+)
 @inject
 async def register(
     response: Response,
