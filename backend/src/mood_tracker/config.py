@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -24,10 +26,16 @@ class JWT(BaseModel):
     REFRESH_EXPIRE_SECONDS: int
 
 
+class APP(BaseModel):
+    PORT: int
+    ENV: Literal["dev", "prod"]
+
+
 class Config(BaseSettings):
     DB: DB
     REDIS: REDIS
     JWT: JWT
+    APP: APP
 
     model_config = SettingsConfigDict(
         env_nested_delimiter="__",
