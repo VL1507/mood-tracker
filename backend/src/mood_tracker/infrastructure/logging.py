@@ -1,38 +1,44 @@
 import logging
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import structlog
 
+if TYPE_CHECKING:
+    from structlog.typing import Processor
+
 
 def setup_logging(env: Literal["dev", "prod"]) -> None:
-    shared_processors = [
+    shared_processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
         structlog.processors.add_log_level,
         structlog.processors.TimeStamper(fmt="iso"),
         structlog.processors.StackInfoRenderer(),
     ]
+    processors: list[Processor] = [
+        *shared_processors,
+    ]
 
     if env == "dev":
-        processors = [
-            *shared_processors,
-            structlog.processors.CallsiteParameterAdder(
-                [
-                    structlog.processors.CallsiteParameter.MODULE,
-                    structlog.processors.CallsiteParameter.FILENAME,
-                    structlog.processors.CallsiteParameter.FUNC_NAME,
-                    structlog.processors.CallsiteParameter.LINENO,
-                ],
-            ),
-            structlog.dev.ConsoleRenderer(),
-        ]
-        renderer = structlog.dev.ConsoleRenderer()
+        processors.extend(
+            [
+                structlog.processors.CallsiteParameterAdder(
+                    [
+                        structlog.processors.CallsiteParameter.MODULE,
+                        structlog.processors.CallsiteParameter.FILENAME,
+                        structlog.processors.CallsiteParameter.FUNC_NAME,
+                        structlog.processors.CallsiteParameter.LINENO,
+                    ],
+                ),
+                structlog.dev.ConsoleRenderer(),
+            ]
+        )
     elif env == "prod":
-        processors = [
-            *shared_processors,
-            structlog.processors.ExceptionRenderer(),
-            structlog.processors.JSONRenderer(),
-        ]
-        renderer = structlog.processors.JSONRenderer()
+        processors.extend(
+            [
+                structlog.processors.ExceptionRenderer(),
+                structlog.processors.JSONRenderer(),
+            ]
+        )
     else:
         raise ValueError(f"invalid value of variable env: {env}")
 
@@ -48,7 +54,9 @@ def setup_logging(env: Literal["dev", "prod"]) -> None:
         foreign_pre_chain=shared_processors,
         processors=[
             structlog.stdlib.ProcessorFormatter.remove_processors_meta,
-            renderer,
+            structlog.dev.ConsoleRenderer()
+            if env == "dev"
+            else structlog.processors.JSONRenderer(),
         ],
     )
 
