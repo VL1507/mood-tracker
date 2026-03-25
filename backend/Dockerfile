@@ -31,4 +31,4 @@ USER nonroot
 
 WORKDIR /app
 
-CMD ["uvicorn", "mood_tracker.app_factory:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "mood_tracker.main"]
