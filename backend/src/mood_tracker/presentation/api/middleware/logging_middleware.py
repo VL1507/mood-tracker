@@ -30,6 +30,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             structlog.contextvars.bind_contextvars(
                 query_string=request.url.query,
             )
+        # TODO: возможно сохранять ip запрещено  # noqa: TD002, TD003
         if request.client:
             structlog.contextvars.bind_contextvars(
                 host=request.client.host,
