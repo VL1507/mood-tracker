@@ -21,6 +21,7 @@ dependencies = [
 dev = [
     "mypy>=1.19.1",
     "ruff>=0.15.4",
+    "ty>=0.0.26",
 ]
 
 [tool.setuptools.packages.find]
@@ -96,3 +97,9 @@ ignore = [
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
 ]
+
+[tool.ty.environment]
+root = ["./src"]
+
+[tool.ty.rules]
+all = "error"
