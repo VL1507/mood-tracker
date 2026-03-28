@@ -21,6 +21,7 @@ dependencies = [
 dev = [
     "mypy>=1.19.1",
     "ruff>=0.15.4",
+    "ty>=0.0.26",
 ]
 
 [tool.setuptools.packages.find]
