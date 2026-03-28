@@ -5,7 +5,7 @@ from mood_tracker.infrastructure.logging import setup_logging
 
 
 def main() -> None:
-    config = Config()
+    config = Config()  # ty:ignore[missing-argument]
     setup_logging(env=config.APP.ENV)
 
     uvicorn.run(
