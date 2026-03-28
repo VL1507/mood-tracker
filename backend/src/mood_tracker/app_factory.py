@@ -10,7 +10,7 @@ from mood_tracker.presentation.dependencies import setup_di
 
 
 def create_app() -> FastAPI:
-    config = Config()
+    config = Config()  # ty:ignore[missing-argument]
 
     app = FastAPI()
 
