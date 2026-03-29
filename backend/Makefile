@@ -14,3 +14,12 @@ mutant:
 
 cognitive:
 	uv run complexipy .
+
+cc:
+	uv run radon cc src/ -s
+
+mi:
+	uv run radon mi src/ -s
+
+hal:
+	uv run radon hal src/ 
