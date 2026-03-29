@@ -1,3 +1,8 @@
+# complexipy
+.complexipy_cache/
+complexipy_results_*
+
+# cosmic-ray
 cosmic-ray-report.html
 cosmic-ray-session.sqlite
 
