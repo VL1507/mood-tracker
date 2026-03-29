@@ -11,3 +11,6 @@ mutant:
 	uv run cosmic-ray init cosmic-ray.toml cosmic-ray-session.sqlite
 	uv run cosmic-ray exec cosmic-ray.toml cosmic-ray-session.sqlite
 	uv run cr-html cosmic-ray-session.sqlite > cosmic-ray-report.html
+
+cognitive:
+	uv run complexipy .
