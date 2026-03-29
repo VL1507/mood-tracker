@@ -106,3 +106,14 @@ ignore = [
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
 ]
+
+[tool.complexipy]
+paths = ["src"]
+max-complexity-allowed = 15
+quiet = false
+ignore-complexity = false
+failed = false
+color = "auto"
+sort = "desc"
+output-csv = true
+output-json = false
