@@ -44,7 +44,7 @@ strict_bytes = true
 local_partial_types = true
 warn_unreachable = true
 explicit_package_bases = true
-mypy_path = ["src"] 
+mypy_path = ["src"]
 plugins = ['pydantic.mypy']
 
 [tool.ruff]
