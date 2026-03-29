@@ -210,6 +210,7 @@ dependencies = [
 dev = [
     { name = "cosmic-ray" },
     { name = "hypothesis" },
+    { name = "mutatest" },
     { name = "mutmut" },
     { name = "mypy" },
     { name = "pytest" },
@@ -237,6 +238,7 @@ requires-dist = [
 dev = [
     { name = "cosmic-ray", specifier = ">=8.4.4" },
     { name = "hypothesis", specifier = ">=6.151.9" },
+    { name = "mutatest", specifier = ">=2.0.1" },
     { name = "mutmut", specifier = ">=3.5.0" },
     { name = "mypy", specifier = ">=1.19.1" },
     { name = "pytest", specifier = ">=9.0.2" },
@@ -877,6 +879,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0c/f7/addf1087b860ac60e6f382240f64fb99f8bfb532bb06f7c542b83c29ca61/multidict-6.7.1-cp314-cp314t-win_amd64.whl", hash = "sha256:497bde6223c212ba11d462853cfa4f0ae6ef97465033e7dc9940cdb3ab5b48e5", size = 53542, upload-time = "2026-01-26T02:46:08.809Z" },
     { url = "https://files.pythonhosted.org/packages/4c/81/4629d0aa32302ef7b2ec65c75a728cc5ff4fa410c50096174c1632e70b3e/multidict-6.7.1-cp314-cp314t-win_arm64.whl", hash = "sha256:2bbd113e0d4af5db41d5ebfe9ccaff89de2120578164f86a5d17d5a576d1e5b2", size = 44719, upload-time = "2026-01-26T02:46:11.146Z" },
     { url = "https://files.pythonhosted.org/packages/81/08/7036c080d7117f28a4af526d794aab6a84463126db031b007717c1a6676e/multidict-6.7.1-py3-none-any.whl", hash = "sha256:55d97cc6dae627efa6a6e548885712d4864b81110ac76fa4e534c03819fa4a56", size = 12319, upload-time = "2026-01-26T02:46:44.004Z" },
+]
+
+[[package]]
+name = "mutatest"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "coverage" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/60/f03cfedb8a466f458a7105535a5dfe5f4bca1f96709f7f7f53377382e388/mutatest-2.0.1.tar.gz", hash = "sha256:037e4585da01bd62113cc587549e0d19fe654839bf35fedbcc42939d37afec9d", size = 83209, upload-time = "2019-12-07T16:30:14.742Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/47/43a5842aeb9536ac2033ce6a16ad64dfc9941aae6e512559733fd1df8087/mutatest-2.0.1-py37-none-any.whl", hash = "sha256:d16ac2a92eaec18b8fad2fa4938436a497abdadc04aaf397e8bb1cfece972bb2", size = 48276, upload-time = "2019-12-07T16:30:12.409Z" },
 ]
 
 [[package]]
