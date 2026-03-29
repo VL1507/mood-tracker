@@ -1,3 +1,6 @@
+cosmic-ray-report.html
+cosmic-ray-session.sqlite
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
