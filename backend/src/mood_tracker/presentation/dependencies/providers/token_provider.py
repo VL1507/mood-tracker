@@ -36,6 +36,4 @@ class TokenProvider(Provider):
     def get_token_service(
         token_repository: ITokenRepository, config: Config
     ) -> ITokenService:
-        return TokenService(
-            token_repository=token_repository, jwt_config=config.JWT
-        )
+        return TokenService(token_repository=token_repository, jwt_config=config.JWT)

@@ -14,9 +14,7 @@ class RefreshUserUseCase:
     def __init__(self, token_service: ITokenService) -> None:
         self._token_service = token_service
 
-    async def __call__(
-        self, input_dto: RefreshUserInputDTO
-    ) -> RefreshUserOutputDTO:
+    async def __call__(self, input_dto: RefreshUserInputDTO) -> RefreshUserOutputDTO:
         """Принимает старый refresh token и возвращает новую пару токенов
 
         Raises:
@@ -36,9 +34,7 @@ class RefreshUserUseCase:
             refresh_token=input_dto.refresh_token
         )
 
-        token_pair = await self._token_service.create_token_pair(
-            user_id=user_id
-        )
+        token_pair = await self._token_service.create_token_pair(user_id=user_id)
 
         logger.info("auth.refresh.success", user_id=str(user_id.value))
 

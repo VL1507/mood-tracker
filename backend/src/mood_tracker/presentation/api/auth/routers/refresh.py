@@ -33,7 +33,5 @@ async def refresh(
     output_dto = await use_case(
         input_dto=RefreshUserInputDTO(refresh_token=refresh_token)
     )
-    cookie_service.set_refresh_token(
-        response=response, token=output_dto.refresh_token
-    )
+    cookie_service.set_refresh_token(response=response, token=output_dto.refresh_token)
     return UserRefreshResponse(access_token=output_dto.access_token)
