@@ -18,7 +18,7 @@ class REDIS(BaseModel):
     PASSWORD: str
 
 
-# TODO: переименовать в AUTH потому что это не только jwt  # noqa: TD002, TD003
+# TODO: переименовать в AUTH потому что это не только jwt
 class JWT(BaseModel):
     ALGORITHM: str
     SECRET_KEY: str

@@ -39,7 +39,7 @@ class RegisterUserUseCase:
         if await self._user_repo.user_exists_by_email(
             email=UserEmail(input_dto.email)
         ):
-            # TODO: возможно стоит искать юзера по email  # noqa: TD002, TD003
+            # TODO: возможно стоит искать юзера по email
             # и возвращать его id в лог  # noqa: RUF003
             logger.warning(
                 "auth.register.failed", reason="email_already_exists"
