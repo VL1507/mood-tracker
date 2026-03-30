@@ -106,7 +106,6 @@ select = [
     "RUF",   # ruff
     "TRY",   # tryceratops
     "PLR",   # pylint refactoring
-    "C90",   # McCabe complexity
 ]
 ignore = [
     "COM812", # ruff warn on it
