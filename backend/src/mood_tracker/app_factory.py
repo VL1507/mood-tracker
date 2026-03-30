@@ -10,7 +10,7 @@ from mood_tracker.presentation.dependencies import setup_di
 
 
 def create_app() -> FastAPI:
-    config = Config()  # ty:ignore[missing-argument]
+    config = Config()  # pyright: ignore[reportCallIssue] # ty:ignore[missing-argument]
 
     app = FastAPI()
 

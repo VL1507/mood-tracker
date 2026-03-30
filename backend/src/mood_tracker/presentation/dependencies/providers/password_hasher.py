@@ -1,6 +1,10 @@
-from dishka import Provider, Scope, provide
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
 
-from mood_tracker.domain.security import IPasswordHasher
+from mood_tracker.domain.auth.security import IPasswordHasher
 from mood_tracker.infrastructure.security import PasswordHasher
 
 

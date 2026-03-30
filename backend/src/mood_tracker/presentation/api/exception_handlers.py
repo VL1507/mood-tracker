@@ -44,12 +44,6 @@ def invalid_refresh_token_handler(
 
 
 def setup_exception_handlers(app: FastAPI) -> None:
-    app.add_exception_handler(
-        EmailAlreadyExistsError, email_already_exists_handler
-    )
-    app.add_exception_handler(
-        InvalidCredentialsError, invalid_credentials_handler
-    )
-    app.add_exception_handler(
-        InvalidRefreshTokenError, invalid_refresh_token_handler
-    )
+    app.add_exception_handler(EmailAlreadyExistsError, email_already_exists_handler)
+    app.add_exception_handler(InvalidCredentialsError, invalid_credentials_handler)
+    app.add_exception_handler(InvalidRefreshTokenError, invalid_refresh_token_handler)

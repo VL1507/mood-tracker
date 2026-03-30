@@ -1,4 +1,8 @@
-from dishka import Provider, Scope, provide
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
 
 from mood_tracker.presentation.api.cookie_service import CookieService
 

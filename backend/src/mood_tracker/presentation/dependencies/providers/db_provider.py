@@ -1,13 +1,19 @@
 from collections.abc import AsyncIterable
 
-from dishka import Provider, Scope, provide
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
 )
 
 from mood_tracker.config import Config
-from mood_tracker.domain.repositories.user_repository import IUserRepository
+from mood_tracker.domain.auth.repositories.user_repository import (
+    IUserRepository,
+)
 from mood_tracker.infrastructure.persistence.repositories import (
     UserRepository,
 )

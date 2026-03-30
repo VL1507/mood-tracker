@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Backend for mood tracker"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -16,7 +16,7 @@ dependencies = [
     "redis>=7.2.1",
     "sqlalchemy[asyncio]>=2.0.48",
     "structlog>=25.5.0",
-    "uvicorn>=0.41.0",
+    "uvicorn[standard]>=0.41.0",
 ]
 
 [dependency-groups]
@@ -31,6 +31,10 @@ dev = [
     "ruff>=0.15.4",
     "ty>=0.0.26",
 ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
@@ -49,9 +53,11 @@ warn_unreachable = true
 explicit_package_bases = true
 mypy_path = ["src"]
 plugins = ['pydantic.mypy']
+python_version = "3.13"
 
 [tool.ruff]
-line-length = 79
+line-length = 88
+target-version = "py313"
 
 [tool.ruff.lint]
 preview = true
@@ -81,7 +87,6 @@ select = [
     "Q",     # flake8-quotes
     "RSE",   # flake8-raise
     "RET",   # flake8-return
-    "SLF",   # flake8-self 
     "SLF",   # flake8-self
     "SIM",   # flake8-simplify
     "TID",   # flake8-tidy-imports
@@ -103,12 +108,13 @@ select = [
     "RUF",   # ruff
     "TRY",   # tryceratops
     "PLR",   # pylint refactoring
-    "C90",   # McCabe complexity
 ]
 ignore = [
     "COM812", # ruff warn on it
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
+    "TD002",  # todo author
+    "TD003",  # todo  issue link
 ]
 
 [tool.ty.environment]

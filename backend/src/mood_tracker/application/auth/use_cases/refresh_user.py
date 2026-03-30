@@ -1,11 +1,11 @@
 import structlog
 
-from mood_tracker.application.dto.refresh_user import (
+from mood_tracker.application.auth.dto.refresh_user import (
     RefreshUserInputDTO,
     RefreshUserOutputDTO,
 )
 from mood_tracker.application.exceptions import InvalidRefreshTokenError
-from mood_tracker.domain.security import ITokenService
+from mood_tracker.domain.auth.security import ITokenService
 
 logger = structlog.stdlib.get_logger()
 
@@ -14,9 +14,7 @@ class RefreshUserUseCase:
     def __init__(self, token_service: ITokenService) -> None:
         self._token_service = token_service
 
-    async def __call__(
-        self, input_dto: RefreshUserInputDTO
-    ) -> RefreshUserOutputDTO:
+    async def __call__(self, input_dto: RefreshUserInputDTO) -> RefreshUserOutputDTO:
         """Принимает старый refresh token и возвращает новую пару токенов
 
         Raises:
@@ -36,9 +34,7 @@ class RefreshUserUseCase:
             refresh_token=input_dto.refresh_token
         )
 
-        token_pair = await self._token_service.create_token_pair(
-            user_id=user_id
-        )
+        token_pair = await self._token_service.create_token_pair(user_id=user_id)
 
         logger.info("auth.refresh.success", user_id=str(user_id.value))
 

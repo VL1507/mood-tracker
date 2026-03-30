@@ -1,13 +1,13 @@
 import structlog
 
-from mood_tracker.application.dto.login_user import (
+from mood_tracker.application.auth.dto.login_user import (
     LoginUserInputDTO,
     LoginUserOutputDTO,
 )
 from mood_tracker.application.exceptions import InvalidCredentialsError
-from mood_tracker.domain.repositories import IUserRepository
-from mood_tracker.domain.security import IPasswordHasher, ITokenService
-from mood_tracker.domain.value_objects import UserEmail
+from mood_tracker.domain.auth.repositories import IUserRepository
+from mood_tracker.domain.auth.security import IPasswordHasher, ITokenService
+from mood_tracker.domain.auth.value_objects import UserEmail
 
 logger = structlog.stdlib.get_logger()
 
@@ -23,18 +23,14 @@ class LoginUserUseCase:
         self._password_hasher = password_hasher
         self._token_service = token_service
 
-    async def __call__(
-        self, input_dto: LoginUserInputDTO
-    ) -> LoginUserOutputDTO:
+    async def __call__(self, input_dto: LoginUserInputDTO) -> LoginUserOutputDTO:
         """Проверяет данные пользователя и возвращает пару токенов
 
         Raises:
             InvalidCredentialsError: отсутствие пользователя с данной почтой
             InvalidCredentialsError: неверный пароль
         """  # noqa: RUF002
-        user = await self._user_repo.get_user_by_email(
-            email=UserEmail(input_dto.email)
-        )
+        user = await self._user_repo.get_user_by_email(email=UserEmail(input_dto.email))
         if user is None:
             logger.warning("auth.login.failed", reason="user_not_found")
             raise InvalidCredentialsError
@@ -50,9 +46,7 @@ class LoginUserUseCase:
             )
             raise InvalidCredentialsError
 
-        token_pair = await self._token_service.create_token_pair(
-            user_id=user.id
-        )
+        token_pair = await self._token_service.create_token_pair(user_id=user.id)
 
         logger.info("auth.login.success", user_id=str(user.id.value))
 

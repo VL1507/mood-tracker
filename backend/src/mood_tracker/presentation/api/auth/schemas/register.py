@@ -15,35 +15,17 @@ class UserRegisterRequest(BaseModel):
         if len(password) < MIN_PASSWORD_LEN:
             raise ValueError("Password must be at least 12 characters long")
         if not any(c.isupper() for c in password):
-            raise ValueError(
-                "Password must contain at least one uppercase letter"
-            )
+            raise ValueError("Password must contain at least one uppercase letter")
         if not any(c.islower() for c in password):
-            raise ValueError(
-                "Password must contain at least one lowercase letter"
-            )
+            raise ValueError("Password must contain at least one lowercase letter")
         if not any(c.isdigit() for c in password):
             raise ValueError("Password must contain at least one digit")
         if not re.search(r"[!@#$%^&*]", password):
             raise ValueError(
-                "Password must contain at least"
-                " one special character (!@#$%^&*)"
+                "Password must contain at least one special character (!@#$%^&*)"
             )
         return password
 
 
 class UserRegisterResponse(BaseModel):
-    access_token: str
-
-
-class UserLoginRequest(BaseModel):
-    email: EmailStr
-    password: str
-
-
-class UserLoginResponse(BaseModel):
-    access_token: str
-
-
-class UserRefreshResponse(BaseModel):
     access_token: str
