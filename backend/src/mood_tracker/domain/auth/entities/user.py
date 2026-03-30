@@ -9,6 +9,8 @@ from mood_tracker.domain.auth.value_objects import (
 
 @dataclass(slots=True)
 class User:
+    """Доменная сущность пользователя (Entity DDD)."""
+
     id: UserID
     email: UserEmail
     password_hash: PasswordHash
