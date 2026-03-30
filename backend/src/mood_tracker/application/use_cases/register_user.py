@@ -1,3 +1,5 @@
+import structlog
+
 from mood_tracker.application.dto.register_user import (
     RegisterUserInputDTO,
     RegisterUserOutputDTO,
@@ -11,6 +13,8 @@ from mood_tracker.domain.value_objects import (
     UserEmail,
     UserID,
 )
+
+logger = structlog.stdlib.get_logger()
 
 
 class RegisterUserUseCase:
@@ -35,6 +39,11 @@ class RegisterUserUseCase:
         if await self._user_repo.user_exists_by_email(
             email=UserEmail(input_dto.email)
         ):
+            # TODO: возможно стоит искать юзера по email  # noqa: TD002, TD003
+            # и возвращать его id в лог  # noqa: RUF003
+            logger.warning(
+                "auth.register.failed", reason="email_already_exists"
+            )
             raise EmailAlreadyExistsError
 
         password_hash = self._password_hasher.hash_password(
@@ -50,6 +59,8 @@ class RegisterUserUseCase:
         token_pair = await self._token_service.create_token_pair(
             user_id=user.id
         )
+
+        logger.info("auth.register.success", user_id=str(user.id.value))
 
         return RegisterUserOutputDTO(
             access_token=token_pair.access_token,
