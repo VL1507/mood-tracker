@@ -5,7 +5,7 @@ from mood_tracker.application.auth.dto.register_user import (
     RegisterUserInputDTO,
 )
 from mood_tracker.application.auth.use_cases import RegisterUserUseCase
-from mood_tracker.presentation.api.auth.schemas.auth import (
+from mood_tracker.presentation.api.auth.schemas.register import (
     UserRegisterRequest,
     UserRegisterResponse,
 )

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, status
 
 from mood_tracker.application.auth.dto.login_user import LoginUserInputDTO
 from mood_tracker.application.auth.use_cases import LoginUserUseCase
-from mood_tracker.presentation.api.auth.schemas.auth import (
+from mood_tracker.presentation.api.auth.schemas.login import (
     UserLoginRequest,
     UserLoginResponse,
 )
