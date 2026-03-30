@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "argon2-cffi>=25.1.0",
+    "complexipy>=5.2.0",
     "dishka>=1.8.0",
     "fastapi>=0.135.1",
     "psycopg[binary]>=3.3.3",
@@ -19,9 +20,19 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "cosmic-ray>=8.4.4",
+    "hypothesis>=6.151.9",
     "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "pytest-cov>=7.1.0",
+    "pytest-randomly>=4.0.1",
     "ruff>=0.15.4",
+    "ty>=0.0.26",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -35,7 +46,7 @@ strict_bytes = true
 local_partial_types = true
 warn_unreachable = true
 explicit_package_bases = true
-mypy_path = ["src"] 
+mypy_path = ["src"]
 plugins = ['pydantic.mypy']
 
 [tool.ruff]
@@ -90,9 +101,28 @@ select = [
     "FURB",  # refurb
     "RUF",   # ruff
     "TRY",   # tryceratops
+    "PLR",   # pylint refactoring
+    "C90",   # McCabe complexity
 ]
 ignore = [
     "COM812", # ruff warn on it
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
 ]
+
+[tool.ty.environment]
+root = ["./src"]
+
+[tool.ty.rules]
+all = "error"
+
+[tool.complexipy]
+paths = ["src"]
+max-complexity-allowed = 15
+quiet = false
+ignore-complexity = false
+failed = false
+color = "auto"
+sort = "desc"
+output-csv = true
+output-json = false
