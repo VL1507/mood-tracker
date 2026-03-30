@@ -30,12 +30,12 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             structlog.contextvars.bind_contextvars(
                 query_string=request.url.query,
             )
-        # TODO: возможно сохранять ip запрещено
+
         if request.client:
             structlog.contextvars.bind_contextvars(
                 host=request.client.host,
                 port=request.client.port,
-            )
+            )  # TODO: возможно сохранять ip запрещено
 
         start = time.perf_counter()
         logger.info("request.started")

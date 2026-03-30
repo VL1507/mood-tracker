@@ -34,6 +34,7 @@ class TokenProvider(Provider):
     @provide(scope=Scope.REQUEST)
     @staticmethod
     def get_token_service(
-        token_repository: ITokenRepository, config: Config
+        token_repository: ITokenRepository,
+        config: Config,
     ) -> ITokenService:
         return TokenService(token_repository=token_repository, jwt_config=config.JWT)

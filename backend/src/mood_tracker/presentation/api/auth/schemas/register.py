@@ -13,17 +13,20 @@ class UserRegisterRequest(BaseModel):
     @classmethod
     def validate_password(cls, password: str) -> str:
         if len(password) < MIN_PASSWORD_LEN:
-            raise ValueError("Password must be at least 12 characters long")
+            msg = "Password must be at least 12 characters long"
+            raise ValueError(msg)
         if not any(c.isupper() for c in password):
-            raise ValueError("Password must contain at least one uppercase letter")
+            msg = "Password must contain at least one uppercase letter"
+            raise ValueError(msg)
         if not any(c.islower() for c in password):
-            raise ValueError("Password must contain at least one lowercase letter")
+            msg = "Password must contain at least one lowercase letter"
+            raise ValueError(msg)
         if not any(c.isdigit() for c in password):
-            raise ValueError("Password must contain at least one digit")
+            msg = "Password must contain at least one digit"
+            raise ValueError(msg)
         if not re.search(r"[!@#$%^&*]", password):
-            raise ValueError(
-                "Password must contain at least one special character (!@#$%^&*)"
-            )
+            msg = "Password must contain at least one special character (!@#$%^&*)"
+            raise ValueError(msg)
         return password
 
 

@@ -29,6 +29,9 @@ class LoginUserUseCase:
         Raises:
             InvalidCredentialsError: отсутствие пользователя с данной почтой
             InvalidCredentialsError: неверный пароль
+
+        Returns:
+            DTO с парой токенов.
         """  # noqa: RUF002
         user = await self._user_repo.get_user_by_email(email=UserEmail(input_dto.email))
         if user is None:

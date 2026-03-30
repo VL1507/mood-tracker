@@ -23,5 +23,8 @@ def new_async_session_maker(
         url=url,
     )
     return async_sessionmaker(
-        engine, class_=AsyncSession, autoflush=False, expire_on_commit=False
+        engine,
+        class_=AsyncSession,
+        autoflush=False,
+        expire_on_commit=False,
     )

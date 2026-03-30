@@ -23,7 +23,7 @@ class RedisTokenRepository(ITokenRepository):
         token_data = json.dumps(
             {
                 "user_id": str(user_id.value),
-            }
+            },
         )
 
         async with self._redis.pipeline(transaction=True) as pipe:

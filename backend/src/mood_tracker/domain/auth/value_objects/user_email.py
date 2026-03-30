@@ -8,9 +8,9 @@ _EMAIL_PATTERN = re.compile(r"[a-zA-Z0-9._+-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 
 @dataclass(slots=True, frozen=True)
 class UserEmail:
-    """
-    Raises:
-        InvalidEmailError: невалидный формат email
+    """Raises:
+    InvalidEmailError: невалидный формат email
+
     """
 
     value: str
