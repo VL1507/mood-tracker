@@ -7,15 +7,17 @@ ENV UV_COMPILE_BYTECODE=1 \
 
 WORKDIR /app
 
+COPY uv.lock pyproject.toml ./
+
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project
+    uv sync --locked --no-install-project --no-dev
 
 COPY . /app
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked
+    uv sync --locked --no-editable
 
 FROM python:3.13-slim-bookworm
 
@@ -25,7 +27,8 @@ RUN groupadd --system --gid 10000 nonroot \
 COPY --from=builder --chown=nonroot:nonroot /app /app
 
 ENV PATH="/app/.venv/bin:$PATH" \
-    PYTHONPATH="/app/src:$PYTHONPATH"
+    PYTHONPATH="/app/src:$PYTHONPATH" \
+    PYTHONUNBUFFERED=1
 
 USER nonroot
 
