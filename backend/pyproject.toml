@@ -33,7 +33,7 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools>=75.0.0", "wheel"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
@@ -53,9 +53,11 @@ warn_unreachable = true
 explicit_package_bases = true
 mypy_path = ["src"]
 plugins = ['pydantic.mypy']
+python_version = "3.13"
 
 [tool.ruff]
 line-length = 79
+target-version = "py313"
 
 [tool.ruff.lint]
 preview = true
