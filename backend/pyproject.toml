@@ -68,7 +68,6 @@ ignore = [
     "CPY001", # лицензия в начале файла
     "D100",   # docstring для модуля
     "D104",   # docstring для пакета
-    "D",      # docstring
     "FIX002", # наличие TODO
     "COM812", # конфликт с formatter
 ]
