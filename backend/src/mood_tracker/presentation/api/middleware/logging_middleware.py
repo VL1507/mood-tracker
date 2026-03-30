@@ -13,11 +13,21 @@ logger = structlog.stdlib.get_logger()
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
+    """Middleware для логов."""
+
     async def dispatch(  # noqa: PLR6301
         self,
         request: Request,
         call_next: RequestResponseEndpoint,
     ) -> Response:
+        """Добавляет параметры в логи и Response.
+
+        Добавляет параметры в structlog с помощью contextvars и X-Request-ID в Response.
+
+        Returns:
+            Response с добавленным X-Request-ID.
+
+        """  # noqa: RUF002
         request_id = str(uuid.uuid4())
 
         structlog.contextvars.clear_contextvars()

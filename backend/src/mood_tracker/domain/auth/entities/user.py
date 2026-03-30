@@ -15,8 +15,10 @@ class User:
 
     def __eq__(self, value: object) -> bool:
         """Сущности сравниваются по идентичности (DDD).
+
         Returns:
             Результат сравнения по self.id
+
         """
         if not isinstance(value, User):
             return NotImplemented
@@ -24,7 +26,9 @@ class User:
 
     def __hash__(self) -> int:
         """Сущности хэшируются по идентичности (DDD).
-        Returns
+
+        Returns:
             Хеш по self.id
+
         """
         return hash(self.id)

@@ -24,7 +24,7 @@ async def login(
     use_case: FromDishka[LoginUserUseCase],
     cookie_service: FromDishka[CookieService],
 ) -> UserLoginResponse:
-    output_dto = await use_case(
+    output_dto = await use_case.execute(
         input_dto=LoginUserInputDTO(email=data.email, password=data.password),
     )
     cookie_service.set_refresh_token(response=response, token=output_dto.refresh_token)

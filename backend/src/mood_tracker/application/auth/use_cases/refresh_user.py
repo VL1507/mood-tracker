@@ -11,10 +11,13 @@ logger = structlog.stdlib.get_logger()
 
 
 class RefreshUserUseCase:
+    """Use case обновления токенов пользователя."""
+
     def __init__(self, token_service: ITokenService) -> None:
+        """Инициализирует use case обновления токенов пользователя."""
         self._token_service = token_service
 
-    async def __call__(self, input_dto: RefreshUserInputDTO) -> RefreshUserOutputDTO:
+    async def execute(self, input_dto: RefreshUserInputDTO) -> RefreshUserOutputDTO:
         """Принимает старый refresh token и возвращает новую пару токенов.
 
         Raises:
@@ -22,6 +25,7 @@ class RefreshUserUseCase:
 
         Returns:
             DTO с парой токенов.
+
         """  # noqa: RUF002
         user_id = await self._token_service.get_user_id_by_refresh_token(
             refresh_token=input_dto.refresh_token,

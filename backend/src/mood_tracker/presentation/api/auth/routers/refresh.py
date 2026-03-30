@@ -35,7 +35,7 @@ async def refresh(
             detail="Refresh token missing",
         )
 
-    output_dto = await use_case(
+    output_dto = await use_case.execute(
         input_dto=RefreshUserInputDTO(refresh_token=refresh_token),
     )
     cookie_service.set_refresh_token(response=response, token=output_dto.refresh_token)
