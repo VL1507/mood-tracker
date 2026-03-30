@@ -1,4 +1,4 @@
-.PHONY: format, lint, test, all, test, test-cov, mutant
+.PHONY: format lint test all test test-cov mutant
 
 format:
 	uv run ruff format
