@@ -37,7 +37,7 @@ class TokenService(ITokenService):
         await self._token_repository.save_refresh_token(
             user_id=user_id,
             refresh_token=refresh_token,
-            time_seconds=self._refresh_exp,
+            ttl_seconds=self._refresh_exp,
         )
 
         return TokenPair(

@@ -5,7 +5,8 @@ from mood_tracker.infrastructure.security import PasswordHasher
 
 
 class PasswordHasherProvider(Provider):
-    @provide(scope=Scope.APP)
-    @staticmethod
-    def get_session_maker() -> IPasswordHasher:
-        return PasswordHasher()
+    password_hasher = provide(
+        PasswordHasher,
+        scope=Scope.APP,
+        provides=IPasswordHasher,
+    )

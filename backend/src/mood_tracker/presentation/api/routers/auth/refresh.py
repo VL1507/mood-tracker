@@ -13,6 +13,7 @@ router = APIRouter()
 @router.post(
     "/refresh",
     status_code=status.HTTP_200_OK,
+    summary="Получение новой пары токенов",
 )
 @inject
 async def refresh(

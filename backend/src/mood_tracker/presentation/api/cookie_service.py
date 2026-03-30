@@ -40,4 +40,7 @@ class CookieService:
         response.delete_cookie(
             key=self._refresh_config.key,
             path=self._refresh_config.path,
+            secure=self._refresh_config.secure,
+            httponly=self._refresh_config.httponly,
+            samesite=self._refresh_config.samesite,
         )

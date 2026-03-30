@@ -14,9 +14,11 @@ class User:
     password_hash: PasswordHash
 
     def __eq__(self, value: object) -> bool:
+        """Сущности сравниваются по идентичности (DDD)"""
         if not isinstance(value, User):
             return NotImplemented
         return self.id == value.id
 
     def __hash__(self) -> int:
+        """Сущности хэшируются по идентичности (DDD)"""
         return hash(self.id)

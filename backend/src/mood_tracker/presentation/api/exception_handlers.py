@@ -7,6 +7,11 @@ from mood_tracker.application.exceptions import (
     InvalidRefreshTokenError,
 )
 
+# TODO: если хендлеры будут различаться только # noqa: RUF100, TD002, TD003
+#  полями, то надо сделать фабрику
+
+# TODO: заменить request и exc на _ и __ # noqa: RUF100, TD002, TD003
+
 
 def email_already_exists_handler(
     request: Request,  # noqa: ARG001
