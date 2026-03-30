@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from mood_tracker.domain.value_objects import UserID
+from mood_tracker.domain.auth.value_objects import UserID
 
 
 class ITokenRepository(Protocol):
@@ -13,9 +13,7 @@ class ITokenRepository(Protocol):
         ttl_seconds: int,
     ) -> None: ...
     @abstractmethod
-    async def get_user_id_by_refresh_token(
-        self, refresh_token: str
-    ) -> UserID | None:
+    async def get_user_id_by_refresh_token(self, refresh_token: str) -> UserID | None:
         """None если токен не найден или истёк."""
         ...
 

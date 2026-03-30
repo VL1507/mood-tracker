@@ -5,7 +5,7 @@ from mood_tracker.infrastructure.logging import setup_logging
 
 
 def main() -> None:
-    config = Config()  # ty:ignore[missing-argument]
+    config = Config()  # pyright: ignore[reportCallIssue] # ty:ignore[missing-argument]
     setup_logging(env=config.APP.ENV)
 
     uvicorn.run(
@@ -14,6 +14,7 @@ def main() -> None:
         host="0.0.0.0",  # noqa: S104
         port=config.APP.PORT,
         log_config=None,
+        access_log=config.APP.ENV == "dev",
     )
 
 

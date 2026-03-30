@@ -1,5 +1,9 @@
-from mood_tracker.domain.entities import User
-from mood_tracker.domain.value_objects import PasswordHash, UserEmail, UserID
+from mood_tracker.domain.auth.entities import User
+from mood_tracker.domain.auth.value_objects import (
+    PasswordHash,
+    UserEmail,
+    UserID,
+)
 
 
 def test_user_fields() -> None:

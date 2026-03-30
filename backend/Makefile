@@ -1,4 +1,4 @@
-.PHONY: format lint test all test test-cov mutant
+.PHONY: format lint test all test test-cov mutant cognitive cc mi hal raw
 
 format:
 	uv run ruff format
@@ -35,3 +35,6 @@ mi:
 
 hal:
 	uv run radon hal src/ 
+
+raw:
+	uv run radon raw src/ -s

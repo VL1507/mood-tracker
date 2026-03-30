@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING, cast
 
 from redis.asyncio.client import Redis
 
-from mood_tracker.domain.repositories import ITokenRepository
-from mood_tracker.domain.value_objects import UserID
+from mood_tracker.domain.auth.repositories import ITokenRepository
+from mood_tracker.domain.auth.value_objects import UserID
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable
@@ -38,9 +38,7 @@ class RedisTokenRepository(ITokenRepository):
             )
             await pipe.execute()
 
-    async def get_user_id_by_refresh_token(
-        self, refresh_token: str
-    ) -> UserID | None:
+    async def get_user_id_by_refresh_token(self, refresh_token: str) -> UserID | None:
         value = await self._redis.get(name=f"refresh:{refresh_token}")
         value = cast("str | None", value)
         if value is None:
@@ -54,9 +52,7 @@ class RedisTokenRepository(ITokenRepository):
         self,
         refresh_token: str,
     ) -> None:
-        user_id = await self.get_user_id_by_refresh_token(
-            refresh_token=refresh_token
-        )
+        user_id = await self.get_user_id_by_refresh_token(refresh_token=refresh_token)
         if user_id is None:
             return
 

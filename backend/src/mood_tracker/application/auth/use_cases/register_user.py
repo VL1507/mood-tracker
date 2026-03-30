@@ -1,14 +1,14 @@
 import structlog
 
-from mood_tracker.application.dto.register_user import (
+from mood_tracker.application.auth.dto.register_user import (
     RegisterUserInputDTO,
     RegisterUserOutputDTO,
 )
 from mood_tracker.application.exceptions import EmailAlreadyExistsError
-from mood_tracker.domain.entities import User
-from mood_tracker.domain.repositories import IUserRepository
-from mood_tracker.domain.security import IPasswordHasher, ITokenService
-from mood_tracker.domain.value_objects import (
+from mood_tracker.domain.auth.entities import User
+from mood_tracker.domain.auth.repositories import IUserRepository
+from mood_tracker.domain.auth.security import IPasswordHasher, ITokenService
+from mood_tracker.domain.auth.value_objects import (
     PasswordHash,
     UserEmail,
     UserID,
@@ -28,27 +28,19 @@ class RegisterUserUseCase:
         self._password_hasher = password_hasher
         self._token_service = token_service
 
-    async def __call__(
-        self, input_dto: RegisterUserInputDTO
-    ) -> RegisterUserOutputDTO:
+    async def __call__(self, input_dto: RegisterUserInputDTO) -> RegisterUserOutputDTO:
         """Регистрирует нового пользователя и возвращает пару токенов
 
         Raises:
             EmailAlreadyExistsError: пользователь с данным email уже существует
         """  # noqa: RUF002
-        if await self._user_repo.user_exists_by_email(
-            email=UserEmail(input_dto.email)
-        ):
-            # TODO: возможно стоит искать юзера по email  # noqa: TD002, TD003
+        if await self._user_repo.user_exists_by_email(email=UserEmail(input_dto.email)):
+            # TODO: возможно стоит искать юзера по email
             # и возвращать его id в лог  # noqa: RUF003
-            logger.warning(
-                "auth.register.failed", reason="email_already_exists"
-            )
+            logger.warning("auth.register.failed", reason="email_already_exists")
             raise EmailAlreadyExistsError
 
-        password_hash = self._password_hasher.hash_password(
-            password=input_dto.password
-        )
+        password_hash = self._password_hasher.hash_password(password=input_dto.password)
         user = User(
             id=UserID.new(),
             email=UserEmail(input_dto.email),
@@ -56,9 +48,7 @@ class RegisterUserUseCase:
         )
         await self._user_repo.save(user=user)
 
-        token_pair = await self._token_service.create_token_pair(
-            user_id=user.id
-        )
+        token_pair = await self._token_service.create_token_pair(user_id=user.id)
 
         logger.info("auth.register.success", user_id=str(user.id.value))
 
