@@ -109,6 +109,8 @@ ignore = [
     "COM812", # ruff warn on it
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
+    "TD002",  # todo author
+    "TD003",  # todo  issue link
 ]
 
 [tool.ty.environment]
