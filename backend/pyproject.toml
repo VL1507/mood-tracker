@@ -28,6 +28,7 @@ dev = [
     "pytest-cov>=7.1.0",
     "pytest-randomly>=4.0.1",
     "ruff>=0.15.4",
+    "ty>=0.0.26",
 ]
 
 [tool.pytest.ini_options]
@@ -108,6 +109,12 @@ ignore = [
     "S101",   # triggers on asserts in tests
     "TRY003", # imho  adding factories to some exceptions is too much
 ]
+
+[tool.ty.environment]
+root = ["./src"]
+
+[tool.ty.rules]
+all = "error"
 
 [tool.complexipy]
 paths = ["src"]
