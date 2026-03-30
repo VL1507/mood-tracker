@@ -1,13 +1,13 @@
 import structlog
 
-from mood_tracker.application.dto.login_user import (
+from mood_tracker.application.auth.dto.login_user import (
     LoginUserInputDTO,
     LoginUserOutputDTO,
 )
 from mood_tracker.application.exceptions import InvalidCredentialsError
-from mood_tracker.domain.repositories import IUserRepository
-from mood_tracker.domain.security import IPasswordHasher, ITokenService
-from mood_tracker.domain.value_objects import UserEmail
+from mood_tracker.domain.auth.repositories import IUserRepository
+from mood_tracker.domain.auth.security import IPasswordHasher, ITokenService
+from mood_tracker.domain.auth.value_objects import UserEmail
 
 logger = structlog.stdlib.get_logger()
 

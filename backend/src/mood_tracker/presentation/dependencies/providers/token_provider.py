@@ -1,9 +1,13 @@
-from dishka import Provider, Scope, provide
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
 from redis.asyncio import Redis
 
 from mood_tracker.config import Config
-from mood_tracker.domain.repositories import ITokenRepository
-from mood_tracker.domain.security import ITokenService
+from mood_tracker.domain.auth.repositories import ITokenRepository
+from mood_tracker.domain.auth.security import ITokenService
 from mood_tracker.infrastructure.security import (
     RedisTokenRepository,
     TokenService,

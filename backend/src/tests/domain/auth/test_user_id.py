@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from mood_tracker.domain.value_objects import UserID
+from mood_tracker.domain.auth.value_objects import UserID
 
 
 def test_user_id_fields() -> None:

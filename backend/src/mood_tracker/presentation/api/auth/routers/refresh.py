@@ -1,11 +1,11 @@
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Cookie, HTTPException, Response, status
 
-from mood_tracker.application.dto.refresh_user import RefreshUserInputDTO
-from mood_tracker.application.use_cases import RefreshUserUseCase
+from mood_tracker.application.auth.dto.refresh_user import RefreshUserInputDTO
+from mood_tracker.application.auth.use_cases import RefreshUserUseCase
 from mood_tracker.constants import REFRESH_TOKEN_COOKIE_NAME
+from mood_tracker.presentation.api.auth.schemas.auth import UserRefreshResponse
 from mood_tracker.presentation.api.cookie_service import CookieService
-from mood_tracker.presentation.api.schemas.auth import UserRefreshResponse
 
 router = APIRouter()
 

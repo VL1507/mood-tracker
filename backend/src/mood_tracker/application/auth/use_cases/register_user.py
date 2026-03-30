@@ -1,14 +1,14 @@
 import structlog
 
-from mood_tracker.application.dto.register_user import (
+from mood_tracker.application.auth.dto.register_user import (
     RegisterUserInputDTO,
     RegisterUserOutputDTO,
 )
 from mood_tracker.application.exceptions import EmailAlreadyExistsError
-from mood_tracker.domain.entities import User
-from mood_tracker.domain.repositories import IUserRepository
-from mood_tracker.domain.security import IPasswordHasher, ITokenService
-from mood_tracker.domain.value_objects import (
+from mood_tracker.domain.auth.entities import User
+from mood_tracker.domain.auth.repositories import IUserRepository
+from mood_tracker.domain.auth.security import IPasswordHasher, ITokenService
+from mood_tracker.domain.auth.value_objects import (
     PasswordHash,
     UserEmail,
     UserID,

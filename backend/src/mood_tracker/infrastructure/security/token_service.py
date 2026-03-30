@@ -1,12 +1,13 @@
 from datetime import UTC, datetime, timedelta
 from secrets import token_urlsafe
+from typing import Any
 
 import jwt
 
 from mood_tracker.config import JWT
-from mood_tracker.domain.repositories import ITokenRepository
-from mood_tracker.domain.security import ITokenService
-from mood_tracker.domain.value_objects import TokenPair, UserID
+from mood_tracker.domain.auth.repositories import ITokenRepository
+from mood_tracker.domain.auth.security import ITokenService
+from mood_tracker.domain.auth.value_objects import TokenPair, UserID
 
 
 class TokenService(ITokenService):
@@ -21,12 +22,12 @@ class TokenService(ITokenService):
 
     async def create_token_pair(self, user_id: UserID) -> TokenPair:
         now = datetime.now(UTC)
-        payload = {
+        payload: dict[str, Any] = {
             "sub": str(user_id.value),
             "iat": now,
             "exp": now + timedelta(seconds=self._access_exp),
         }
-        access_token = jwt.encode(
+        access_token = jwt.encode(  # pyright: ignore[reportUnknownMemberType]
             payload=payload,
             key=self._secret_key,
             algorithm=self._algorithm,

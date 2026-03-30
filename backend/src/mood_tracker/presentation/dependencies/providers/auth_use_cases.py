@@ -1,6 +1,10 @@
-from dishka import Provider, Scope, provide
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
 
-from mood_tracker.application.use_cases import (
+from mood_tracker.application.auth.use_cases import (
     LoginUserUseCase,
     RefreshUserUseCase,
     RegisterUserUseCase,
