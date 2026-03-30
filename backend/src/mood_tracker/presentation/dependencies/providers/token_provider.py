@@ -21,10 +21,11 @@ class TokenProvider(Provider):
             decode_responses=True,
         )
 
-    @provide(scope=Scope.REQUEST)
-    @staticmethod
-    def get_token_repository(redis: Redis) -> ITokenRepository:
-        return RedisTokenRepository(redis=redis)
+    token_repository = provide(
+        RedisTokenRepository,
+        scope=Scope.REQUEST,
+        provides=ITokenRepository,
+    )
 
     @provide(scope=Scope.REQUEST)
     @staticmethod

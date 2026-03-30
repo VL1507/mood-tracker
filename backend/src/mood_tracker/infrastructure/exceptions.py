@@ -1,1 +1,2 @@
-class InfrastructureError(Exception): ...
+class InfrastructureError(Exception):
+    """Базовая ошибка для слоя инфраструктуры"""

@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,7 +18,7 @@ class REDIS(BaseModel):
     PASSWORD: str
 
 
-# TODO: переименовать в AUTH потому что это не только jwt
+# TODO: переименовать в AUTH потому что это не только jwt  # noqa: TD002, TD003
 class JWT(BaseModel):
     ALGORITHM: str
     SECRET_KEY: str
@@ -24,10 +26,16 @@ class JWT(BaseModel):
     REFRESH_EXPIRE_SECONDS: int
 
 
+class APP(BaseModel):
+    PORT: int
+    ENV: Literal["dev", "prod"]
+
+
 class Config(BaseSettings):
     DB: DB
     REDIS: REDIS
     JWT: JWT
+    APP: APP
 
     model_config = SettingsConfigDict(
         env_nested_delimiter="__",

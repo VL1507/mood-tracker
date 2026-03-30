@@ -15,6 +15,7 @@ router = APIRouter()
 @router.post(
     "/login",
     status_code=status.HTTP_200_OK,
+    summary="Вход в аккаунт",
 )
 @inject
 async def login(
