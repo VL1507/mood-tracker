@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Backend for mood tracker"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -31,6 +31,10 @@ dev = [
     "ruff>=0.15.4",
     "ty>=0.0.26",
 ]
+
+[build-system]
+requires = ["setuptools>=75.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
