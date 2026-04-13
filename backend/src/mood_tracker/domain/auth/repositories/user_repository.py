@@ -6,13 +6,21 @@ from mood_tracker.domain.auth.value_objects import UserEmail
 
 
 class IUserRepository(Protocol):
-    @abstractmethod
-    async def save(self, user: User) -> None: ...
+    """Протокол User репозитория."""
 
     @abstractmethod
-    async def user_exists_by_email(self, email: UserEmail) -> bool: ...
+    async def save(self, user: User) -> None:
+        """Сохранение User."""
+
+    @abstractmethod
+    async def user_exists_by_email(self, email: UserEmail) -> bool:
+        """Проверка существования User по UserEmail."""
 
     @abstractmethod
     async def get_user_by_email(self, email: UserEmail) -> User | None:
-        """None если пользователь не найден."""
+        """
+        Получение User по UserEmail.
+
+        None если пользователь не найден.
+        """
         ...

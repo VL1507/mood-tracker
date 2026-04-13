@@ -13,22 +13,30 @@ logger = structlog.stdlib.get_logger()
 
 
 class LoginUserUseCase:
+    """Use case входа пользователя в аккаунт."""
+
     def __init__(
         self,
         user_repo: IUserRepository,
         password_hasher: IPasswordHasher,
         token_service: ITokenService,
     ) -> None:
+        """Инициализирует use case входа пользователя в аккаунт."""
         self._user_repo = user_repo
         self._password_hasher = password_hasher
         self._token_service = token_service
 
-    async def __call__(self, input_dto: LoginUserInputDTO) -> LoginUserOutputDTO:
-        """Проверяет данные пользователя и возвращает пару токенов
+    async def execute(self, input_dto: LoginUserInputDTO) -> LoginUserOutputDTO:
+        """
+        Проверяет данные пользователя и возвращает пару токенов.
+
+        Returns:
+            DTO с парой токенов.
 
         Raises:
             InvalidCredentialsError: отсутствие пользователя с данной почтой
             InvalidCredentialsError: неверный пароль
+
         """  # noqa: RUF002
         user = await self._user_repo.get_user_by_email(email=UserEmail(input_dto.email))
         if user is None:

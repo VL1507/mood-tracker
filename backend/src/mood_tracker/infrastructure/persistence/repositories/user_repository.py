@@ -12,20 +12,38 @@ from mood_tracker.infrastructure.persistence.models import UserORM
 
 
 class UserRepository(IUserRepository):
+    """Реализация IUserRepository на SQLAlchemy."""
+
     def __init__(self, session: AsyncSession) -> None:
+        """Инициализация UserRepository."""
         self._session = session
 
     async def save(self, user: User) -> None:
+        """Сохранение User."""
         user_orm = self._domain_to_orm(user_domain=user)
         self._session.add(user_orm)
         await self._session.commit()
 
     async def user_exists_by_email(self, email: UserEmail) -> bool:
+        """
+        Проверка существования User по UserEmail.
+
+        Returns:
+            bool: True если существует, False иначе
+
+        """
         stmt = select(UserORM).where(UserORM.email == email.value)
         result = await self._session.execute(stmt)
         return result.scalar_one_or_none() is not None
 
     async def get_user_by_email(self, email: UserEmail) -> User | None:
+        """
+        Получение User по UserEmail.
+
+        Returns:
+            User | None: None если пользователь не найден.
+
+        """
         stmt = select(UserORM).where(UserORM.email == email.value)
         result = await self._session.execute(stmt)
         user_orm = result.scalar()

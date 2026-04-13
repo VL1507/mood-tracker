@@ -9,6 +9,8 @@ from mood_tracker.constants import REFRESH_TOKEN_COOKIE_NAME
 
 @dataclass(frozen=True)
 class RefreshCookieConfig:
+    """Конфиг значений для установки/удаления куки."""
+
     key: str
     max_age: int
     secure: bool
@@ -18,7 +20,10 @@ class RefreshCookieConfig:
 
 
 class CookieService:
+    """Сервис для работы с куки."""  # noqa: RUF002
+
     def __init__(self, config: Config) -> None:
+        """Инициализация сервиса для работы с куки."""  # noqa: RUF002
         self._refresh_config = RefreshCookieConfig(
             key=REFRESH_TOKEN_COOKIE_NAME,
             max_age=config.JWT.REFRESH_EXPIRE_SECONDS,
@@ -26,6 +31,7 @@ class CookieService:
         )
 
     def set_refresh_token(self, response: Response, token: str) -> None:
+        """Установка refresh token в куки."""
         response.set_cookie(
             key=self._refresh_config.key,
             value=token,
@@ -37,6 +43,7 @@ class CookieService:
         )
 
     def delete_refresh_token(self, response: Response) -> None:
+        """Удаление refresh token в куки."""
         response.delete_cookie(
             key=self._refresh_config.key,
             path=self._refresh_config.path,

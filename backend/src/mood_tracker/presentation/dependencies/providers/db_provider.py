@@ -23,9 +23,18 @@ from mood_tracker.infrastructure.persistence.session import (
 
 
 class DBProvider(Provider):
+    """Провайдер для всего связанного с БД."""  # noqa: RUF002
+
     @provide(scope=Scope.APP)
     @staticmethod
     def get_session_maker(config: Config) -> async_sessionmaker[AsyncSession]:
+        """
+        Провайдер для async_sessionmaker[AsyncSession].
+
+        Returns:
+            async_sessionmaker[AsyncSession]
+
+        """
         return new_async_session_maker(db_config=config.DB)
 
     @provide(scope=Scope.REQUEST)
@@ -33,6 +42,13 @@ class DBProvider(Provider):
     async def get_session(
         session_maker: async_sessionmaker[AsyncSession],
     ) -> AsyncIterable[AsyncSession]:
+        """
+        Провайдер сессии.
+
+        Yields:
+            Iterator[AsyncIterable[AsyncSession]]
+
+        """
         async with session_maker() as session:
             yield session
 

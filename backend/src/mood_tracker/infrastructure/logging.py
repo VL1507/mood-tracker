@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Literal, assert_never
 
 import structlog
 
@@ -8,6 +8,11 @@ if TYPE_CHECKING:
 
 
 def setup_logging(env: Literal["dev", "prod"]) -> None:
+    """
+    Настраивает формат логов.
+
+    Для dev цветные логи текстов, для prod структурированные json.
+    """
     shared_processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
         structlog.processors.add_log_level,
@@ -30,17 +35,17 @@ def setup_logging(env: Literal["dev", "prod"]) -> None:
                     ],
                 ),
                 structlog.dev.ConsoleRenderer(),
-            ]
+            ],
         )
     elif env == "prod":
         processors.extend(
             [
                 structlog.processors.ExceptionRenderer(),
                 structlog.processors.JSONRenderer(),
-            ]
+            ],
         )
     else:
-        raise ValueError(f"invalid value of variable env: {env}")
+        assert_never(env)
 
     structlog.configure(
         processors=processors,

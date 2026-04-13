@@ -13,6 +13,13 @@ from .providers import (
 
 
 def make_container_di(config: Config) -> AsyncContainer:
+    """
+    Создание асинхронного контейнера.
+
+    Returns:
+        AsyncContainer
+
+    """
     return make_async_container(
         AuthUseCasesProvider(),
         CookieServiceProvider(),
