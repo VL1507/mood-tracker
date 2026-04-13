@@ -1,7 +1,7 @@
 import uvicorn
 
 from mood_tracker.config import Config
-from mood_tracker.logging import setup_logging
+from mood_tracker.log_config import setup_logging
 
 
 def main() -> None:
