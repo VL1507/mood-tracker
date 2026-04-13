@@ -18,21 +18,29 @@ logger = structlog.stdlib.get_logger()
 
 
 class RegisterUserUseCase:
+    """Use case регистрации пользователя."""
+
     def __init__(
         self,
         user_repo: IUserRepository,
         password_hasher: IPasswordHasher,
         token_service: ITokenService,
     ) -> None:
+        """Инициализирует UseCase регистрации пользователя."""
         self._user_repo = user_repo
         self._password_hasher = password_hasher
         self._token_service = token_service
 
-    async def __call__(self, input_dto: RegisterUserInputDTO) -> RegisterUserOutputDTO:
-        """Регистрирует нового пользователя и возвращает пару токенов
+    async def execute(self, input_dto: RegisterUserInputDTO) -> RegisterUserOutputDTO:
+        """
+        Регистрирует нового пользователя и возвращает пару токенов.
+
+        Returns:
+            DTO с парой токенов.
 
         Raises:
-            EmailAlreadyExistsError: пользователь с данным email уже существует
+            EmailAlreadyExistsError: пользователь с данным email уже существует.
+
         """  # noqa: RUF002
         if await self._user_repo.user_exists_by_email(email=UserEmail(input_dto.email)):
             # TODO: возможно стоит искать юзера по email

@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Cookie, HTTPException, Response, status
 
@@ -22,16 +24,29 @@ async def refresh(
     response: Response,
     use_case: FromDishka[RefreshUserUseCase],
     cookie_service: FromDishka[CookieService],
-    refresh_token: str | None = Cookie(None, alias=REFRESH_TOKEN_COOKIE_NAME),
+    refresh_token: Annotated[
+        str | None,
+        Cookie(alias=REFRESH_TOKEN_COOKIE_NAME),
+    ] = None,
 ) -> UserRefreshResponse:
+    """
+    Эндпоинт обновления токенов.
+
+    Returns:
+        UserRefreshResponse
+
+    Raises:
+        HTTPException: refresh token отсутствует в куки
+
+    """
     if not refresh_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Refresh token missing",
         )
 
-    output_dto = await use_case(
-        input_dto=RefreshUserInputDTO(refresh_token=refresh_token)
+    output_dto = await use_case.execute(
+        input_dto=RefreshUserInputDTO(refresh_token=refresh_token),
     )
     cookie_service.set_refresh_token(response=response, token=output_dto.refresh_token)
     return UserRefreshResponse(access_token=output_dto.access_token)

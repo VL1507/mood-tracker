@@ -5,6 +5,7 @@ from mood_tracker.infrastructure.logging import setup_logging
 
 
 def main() -> None:
+    """Запуск FastAPI приложения в помощью uvicorn."""
     config = Config()  # pyright: ignore[reportCallIssue] # ty:ignore[missing-argument]
     setup_logging(env=config.APP.ENV)
 

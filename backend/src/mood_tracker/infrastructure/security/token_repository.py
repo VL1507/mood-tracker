@@ -11,7 +11,10 @@ if TYPE_CHECKING:
 
 
 class RedisTokenRepository(ITokenRepository):
+    """Реализация ITokenRepository на Redis."""
+
     def __init__(self, redis: Redis) -> None:
+        """Инициализация RedisTokenRepository."""
         self._redis = redis
 
     async def save_refresh_token(
@@ -20,10 +23,11 @@ class RedisTokenRepository(ITokenRepository):
         refresh_token: str,
         ttl_seconds: int,
     ) -> None:
+        """Сохранения refresh token."""
         token_data = json.dumps(
             {
                 "user_id": str(user_id.value),
-            }
+            },
         )
 
         async with self._redis.pipeline(transaction=True) as pipe:
@@ -39,6 +43,13 @@ class RedisTokenRepository(ITokenRepository):
             await pipe.execute()
 
     async def get_user_id_by_refresh_token(self, refresh_token: str) -> UserID | None:
+        """
+        Получение UserID по значению refresh token.
+
+        Returns:
+            UserID | None: None если токен не найден или истёк.
+
+        """
         value = await self._redis.get(name=f"refresh:{refresh_token}")
         value = cast("str | None", value)
         if value is None:
@@ -52,6 +63,7 @@ class RedisTokenRepository(ITokenRepository):
         self,
         refresh_token: str,
     ) -> None:
+        """Удаление refresh token."""
         user_id = await self.get_user_id_by_refresh_token(refresh_token=refresh_token)
         if user_id is None:
             return
