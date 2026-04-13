@@ -68,12 +68,18 @@ ignore = [
     "CPY001", # лицензия в начале файла
     "D100",   # docstring для модуля
     "D104",   # docstring для пакета
+    "D203",   # пустая строки перед docstring класса, конфликт с D211
+    "D212",   # summary на первой строке, конфликт с D213
     "FIX002", # наличие TODO
     "COM812", # конфликт с formatter
+
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"src/tests/**" = ["S101", "D103"]
+"src/tests/**" = [
+    "S101", # запрет на assert
+    "D103", # docstring для модуля
+]
 
 [tool.ty.environment]
 root = ["./src"]
