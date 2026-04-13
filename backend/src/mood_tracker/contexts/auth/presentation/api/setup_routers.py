@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI
 
-from .auth import setup_routers as setup_auth_routers
+from .routers.setup import setup_routers as setup_auth_routers
 
 
 def setup_routers(app: FastAPI) -> None:

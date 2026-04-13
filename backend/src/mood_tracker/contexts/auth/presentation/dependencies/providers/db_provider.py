@@ -11,13 +11,13 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from mood_tracker.config import Config
-from mood_tracker.domain.auth.repositories.user_repository import (
+from mood_tracker.contexts.auth.domain.repositories.user_repository import (
     IUserRepository,
 )
-from mood_tracker.infrastructure.persistence.repositories import (
+from mood_tracker.contexts.auth.infrastructure.persistence.repositories import (
     UserRepository,
 )
-from mood_tracker.infrastructure.persistence.session import (
+from mood_tracker.contexts.auth.infrastructure.persistence.session import (
     new_async_session_maker,
 )
 

@@ -6,9 +6,9 @@ from dishka import (
 from redis.asyncio import Redis
 
 from mood_tracker.config import Config
-from mood_tracker.domain.auth.repositories import ITokenRepository
-from mood_tracker.domain.auth.security import ITokenService
-from mood_tracker.infrastructure.security import (
+from mood_tracker.contexts.auth.domain.repositories import ITokenRepository
+from mood_tracker.contexts.auth.domain.security import ITokenService
+from mood_tracker.contexts.auth.infrastructure.security import (
     RedisTokenRepository,
     TokenService,
 )

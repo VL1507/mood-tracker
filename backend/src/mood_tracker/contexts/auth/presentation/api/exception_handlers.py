@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from mood_tracker.application.exceptions import (
+from mood_tracker.contexts.auth.application.exceptions import (
     EmailAlreadyExistsError,
     InvalidCredentialsError,
     InvalidRefreshTokenError,

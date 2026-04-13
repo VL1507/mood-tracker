@@ -4,7 +4,7 @@ from dishka import (
     provide,  # pyright: ignore[reportUnknownVariableType]
 )
 
-from mood_tracker.application.auth.use_cases import (
+from mood_tracker.contexts.auth.application.use_cases import (
     LoginUserUseCase,
     RefreshUserUseCase,
     RegisterUserUseCase,

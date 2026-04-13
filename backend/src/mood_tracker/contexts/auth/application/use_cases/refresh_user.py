@@ -1,11 +1,11 @@
 import structlog
 
-from mood_tracker.application.auth.dto.refresh_user import (
+from mood_tracker.contexts.auth.application.dto.refresh_user import (
     RefreshUserInputDTO,
     RefreshUserOutputDTO,
 )
-from mood_tracker.application.exceptions import InvalidRefreshTokenError
-from mood_tracker.domain.auth.security import ITokenService
+from mood_tracker.contexts.auth.application.exceptions import InvalidRefreshTokenError
+from mood_tracker.contexts.auth.domain.security import ITokenService
 
 logger = structlog.stdlib.get_logger()
 

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from mood_tracker.domain.auth.value_objects import (
+from mood_tracker.contexts.auth.domain.value_objects import (
     PasswordHash,
     UserEmail,
     UserID,

@@ -1,13 +1,13 @@
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Response, status
 
-from mood_tracker.application.auth.dto.login_user import LoginUserInputDTO
-from mood_tracker.application.auth.use_cases import LoginUserUseCase
-from mood_tracker.presentation.api.auth.schemas.login import (
+from mood_tracker.contexts.auth.application.dto.login_user import LoginUserInputDTO
+from mood_tracker.contexts.auth.application.use_cases import LoginUserUseCase
+from mood_tracker.contexts.auth.presentation.api.cookie_service import CookieService
+from mood_tracker.contexts.auth.presentation.api.schemas.login import (
     UserLoginRequest,
     UserLoginResponse,
 )
-from mood_tracker.presentation.api.cookie_service import CookieService
 
 router = APIRouter()
 

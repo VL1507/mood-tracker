@@ -5,9 +5,9 @@ from typing import Any
 import jwt
 
 from mood_tracker.config import JWT
-from mood_tracker.domain.auth.repositories import ITokenRepository
-from mood_tracker.domain.auth.security import ITokenService
-from mood_tracker.domain.auth.value_objects import TokenPair, UserID
+from mood_tracker.contexts.auth.domain.repositories import ITokenRepository
+from mood_tracker.contexts.auth.domain.security import ITokenService
+from mood_tracker.contexts.auth.domain.value_objects import TokenPair, UserID
 
 
 class TokenService(ITokenService):

@@ -3,13 +3,13 @@ from typing import Annotated
 from dishka.integrations.fastapi import FromDishka, inject
 from fastapi import APIRouter, Cookie, HTTPException, Response, status
 
-from mood_tracker.application.auth.dto.refresh_user import RefreshUserInputDTO
-from mood_tracker.application.auth.use_cases import RefreshUserUseCase
 from mood_tracker.constants import REFRESH_TOKEN_COOKIE_NAME
-from mood_tracker.presentation.api.auth.schemas.refresh import (
+from mood_tracker.contexts.auth.application.dto.refresh_user import RefreshUserInputDTO
+from mood_tracker.contexts.auth.application.use_cases import RefreshUserUseCase
+from mood_tracker.contexts.auth.presentation.api.cookie_service import CookieService
+from mood_tracker.contexts.auth.presentation.api.schemas.refresh import (
     UserRefreshResponse,
 )
-from mood_tracker.presentation.api.cookie_service import CookieService
 
 router = APIRouter()
 

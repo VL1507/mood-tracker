@@ -4,8 +4,8 @@ from dishka import (
     provide,  # pyright: ignore[reportUnknownVariableType]
 )
 
-from mood_tracker.domain.auth.security import IPasswordHasher
-from mood_tracker.infrastructure.security import PasswordHasher
+from mood_tracker.contexts.auth.domain.security import IPasswordHasher
+from mood_tracker.contexts.auth.infrastructure.security import PasswordHasher
 
 
 class PasswordHasherProvider(Provider):

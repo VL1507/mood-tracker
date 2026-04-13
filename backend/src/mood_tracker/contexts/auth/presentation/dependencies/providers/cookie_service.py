@@ -4,7 +4,7 @@ from dishka import (
     provide,  # pyright: ignore[reportUnknownVariableType]
 )
 
-from mood_tracker.presentation.api.cookie_service import CookieService
+from mood_tracker.contexts.auth.presentation.api.cookie_service import CookieService
 
 
 class CookieServiceProvider(Provider):

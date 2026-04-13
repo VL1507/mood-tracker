@@ -1,14 +1,14 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from mood_tracker.domain.auth.entities import User
-from mood_tracker.domain.auth.repositories import IUserRepository
-from mood_tracker.domain.auth.value_objects import (
+from mood_tracker.contexts.auth.domain.entities import User
+from mood_tracker.contexts.auth.domain.repositories import IUserRepository
+from mood_tracker.contexts.auth.domain.value_objects import (
     PasswordHash,
     UserEmail,
     UserID,
 )
-from mood_tracker.infrastructure.persistence.models import UserORM
+from mood_tracker.contexts.auth.infrastructure.persistence.models import UserORM
 
 
 class UserRepository(IUserRepository):

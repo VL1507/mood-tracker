@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from mood_tracker.domain.auth.entities import User
-from mood_tracker.domain.auth.value_objects import UserEmail
+from mood_tracker.contexts.auth.domain.entities import User
+from mood_tracker.contexts.auth.domain.value_objects import UserEmail
 
 
 class IUserRepository(Protocol):

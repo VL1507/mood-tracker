@@ -1,7 +1,7 @@
 from argon2 import PasswordHasher as Argon2PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
-from mood_tracker.domain.auth.security import IPasswordHasher
+from mood_tracker.contexts.auth.domain.security import IPasswordHasher
 
 
 class PasswordHasher(IPasswordHasher):

@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from mood_tracker.domain.exceptions import InvalidEmailError
+from mood_tracker.contexts.auth.domain.exceptions import InvalidEmailError
 
 _EMAIL_PATTERN = re.compile(r"[a-zA-Z0-9._+-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 
