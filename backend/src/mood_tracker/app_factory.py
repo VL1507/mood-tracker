@@ -10,6 +10,16 @@ from mood_tracker.presentation.dependencies import setup_di
 
 
 def create_app() -> FastAPI:
+    """
+    Создание приложения FastAPI.
+
+    Создается приложение FastAPI, подключаются middleware, routers,
+    exception handlers и di
+
+    Returns:
+        FastAPI
+
+    """
     config = Config()  # pyright: ignore[reportCallIssue] # ty:ignore[missing-argument]
 
     app = FastAPI()

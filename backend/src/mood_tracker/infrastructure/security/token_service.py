@@ -11,7 +11,10 @@ from mood_tracker.domain.auth.value_objects import TokenPair, UserID
 
 
 class TokenService(ITokenService):
+    """Реализация ITokenService."""
+
     def __init__(self, token_repository: ITokenRepository, jwt_config: JWT) -> None:
+        """Инициализация ITokenService."""
         self._token_repository = token_repository
         self._algorithm = jwt_config.ALGORITHM
         self._secret_key = jwt_config.SECRET_KEY
@@ -19,6 +22,13 @@ class TokenService(ITokenService):
         self._refresh_exp = jwt_config.REFRESH_EXPIRE_SECONDS
 
     async def create_token_pair(self, user_id: UserID) -> TokenPair:
+        """
+        Создание пары токенов.
+
+        Returns:
+            TokenPair
+
+        """
         now = datetime.now(UTC)
         payload: dict[str, Any] = {
             "sub": str(user_id.value),
@@ -42,9 +52,17 @@ class TokenService(ITokenService):
         return TokenPair(access_token=access_token, refresh_token=refresh_token)
 
     async def get_user_id_by_refresh_token(self, refresh_token: str) -> UserID | None:
+        """
+        Получение UserID по значению refresh_token.
+
+        Returns:
+            UserID | None:  None если токен не найден или истёк
+
+        """
         return await self._token_repository.get_user_id_by_refresh_token(
             refresh_token=refresh_token,
         )
 
     async def revoke_refresh_token(self, refresh_token: str) -> None:
+        """Отзыв refresh token."""
         await self._token_repository.delete_refresh_token(refresh_token=refresh_token)

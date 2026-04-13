@@ -20,7 +20,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         request: Request,
         call_next: RequestResponseEndpoint,
     ) -> Response:
-        """Добавляет параметры в логи и Response.
+        """
+        Добавляет параметры в логи и Response.
 
         Добавляет параметры в structlog с помощью contextvars и X-Request-ID в Response.
 

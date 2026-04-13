@@ -11,6 +11,13 @@ from mood_tracker.config import DB
 def new_async_session_maker(
     db_config: DB,
 ) -> async_sessionmaker[AsyncSession]:
+    """
+    Создание async_sessionmaker[AsyncSession].
+
+    Returns:
+        async_sessionmaker[AsyncSession]
+
+    """
     url = URL.create(
         drivername="postgresql+psycopg",
         username=db_config.USER,

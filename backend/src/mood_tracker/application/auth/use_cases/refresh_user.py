@@ -18,13 +18,14 @@ class RefreshUserUseCase:
         self._token_service = token_service
 
     async def execute(self, input_dto: RefreshUserInputDTO) -> RefreshUserOutputDTO:
-        """Принимает старый refresh token и возвращает новую пару токенов.
-
-        Raises:
-            InvalidRefreshTokenError: токен не найден в redis.
+        """
+        Принимает старый refresh token и возвращает новую пару токенов.
 
         Returns:
             DTO с парой токенов.
+
+        Raises:
+            InvalidRefreshTokenError: токен не найден в redis.
 
         """  # noqa: RUF002
         user_id = await self._token_service.get_user_id_by_refresh_token(

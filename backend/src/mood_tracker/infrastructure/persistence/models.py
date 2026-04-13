@@ -7,10 +7,12 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Base(AsyncAttrs, DeclarativeBase):
-    pass
+    """Базовая модель sqlalchemy."""
 
 
 class UserORM(Base):
+    """Модель пользователя."""
+
     __tablename__ = "users"
 
     id: Mapped[uuid.UUID] = mapped_column(

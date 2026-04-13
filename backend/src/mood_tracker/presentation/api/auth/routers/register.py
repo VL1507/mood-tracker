@@ -26,6 +26,13 @@ async def register(
     use_case: FromDishka[RegisterUserUseCase],
     cookie_service: FromDishka[CookieService],
 ) -> UserRegisterResponse:
+    """
+    Эндпоинт регистрации.
+
+    Returns:
+        UserRegisterResponse
+
+    """
     output_dto = await use_case.execute(
         input_dto=RegisterUserInputDTO(email=data.email, password=data.password),
     )

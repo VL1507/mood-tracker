@@ -29,6 +29,16 @@ async def refresh(
         Cookie(alias=REFRESH_TOKEN_COOKIE_NAME),
     ] = None,
 ) -> UserRefreshResponse:
+    """
+    Эндпоинт обновления токенов.
+
+    Returns:
+        UserRefreshResponse
+
+    Raises:
+        HTTPException: refresh token отсутствует в куки
+
+    """
     if not refresh_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

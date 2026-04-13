@@ -6,12 +6,31 @@ MIN_PASSWORD_LEN = 12
 
 
 class UserRegisterRequest(BaseModel):
+    """Схема данных запроса для регистрации."""
+
     email: EmailStr
     password: str
 
     @field_validator("password")
     @classmethod
     def validate_password(cls, password: str) -> str:
+        """
+        Валидация пароля.
+
+        Args:
+            password (str): пароль
+
+        Returns:
+            str: пароль без изменения
+
+        Raises:
+            ValueError: Ошибка в длине пароля
+            ValueError: Пароль без букв верхнего регистра
+            ValueError: Пароль без букв нижнего регистра
+            ValueError: Пароль без цифр
+            ValueError: Пароль без специальных символов
+
+        """
         if len(password) < MIN_PASSWORD_LEN:
             msg = "Password must be at least 12 characters long"
             raise ValueError(msg)
@@ -31,4 +50,6 @@ class UserRegisterRequest(BaseModel):
 
 
 class UserRegisterResponse(BaseModel):
+    """Схема данных ответа для регистрации."""
+
     access_token: str

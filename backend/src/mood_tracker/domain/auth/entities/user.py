@@ -16,7 +16,8 @@ class User:
     password_hash: PasswordHash
 
     def __eq__(self, value: object) -> bool:
-        """Сущности сравниваются по идентичности (DDD).
+        """
+        Сущности сравниваются по идентичности (DDD).
 
         Returns:
             Результат сравнения по self.id
@@ -27,7 +28,8 @@ class User:
         return self.id == value.id
 
     def __hash__(self) -> int:
-        """Сущности хэшируются по идентичности (DDD).
+        """
+        Сущности хэшируются по идентичности (DDD).
 
         Returns:
             Хеш по self.id

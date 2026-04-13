@@ -24,6 +24,13 @@ async def login(
     use_case: FromDishka[LoginUserUseCase],
     cookie_service: FromDishka[CookieService],
 ) -> UserLoginResponse:
+    """
+    Эндпоинт входа в аккаунт.
+
+    Returns:
+        UserLoginResponse
+
+    """
     output_dto = await use_case.execute(
         input_dto=LoginUserInputDTO(email=data.email, password=data.password),
     )

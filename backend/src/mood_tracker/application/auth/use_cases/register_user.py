@@ -32,13 +32,14 @@ class RegisterUserUseCase:
         self._token_service = token_service
 
     async def execute(self, input_dto: RegisterUserInputDTO) -> RegisterUserOutputDTO:
-        """Регистрирует нового пользователя и возвращает пару токенов.
-
-        Raises:
-            EmailAlreadyExistsError: пользователь с данным email уже существует.
+        """
+        Регистрирует нового пользователя и возвращает пару токенов.
 
         Returns:
             DTO с парой токенов.
+
+        Raises:
+            EmailAlreadyExistsError: пользователь с данным email уже существует.
 
         """  # noqa: RUF002
         if await self._user_repo.user_exists_by_email(email=UserEmail(input_dto.email)):

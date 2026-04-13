@@ -8,14 +8,18 @@ _EMAIL_PATTERN = re.compile(r"[a-zA-Z0-9._+-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 
 @dataclass(slots=True, frozen=True)
 class UserEmail:
-    """Raises:
-    InvalidEmailError: невалидный формат email
-
-    """
+    """Value object почты пользователя."""
 
     value: str
 
     def __post_init__(self) -> None:
+        """
+        Нормалиция и проверка формата.
+
+        Raises:
+            InvalidEmailError: строка не проходит проверку на формат почты
+
+        """
         normalized = self.value.strip().lower()
         if not _EMAIL_PATTERN.fullmatch(normalized):
             raise InvalidEmailError(self.value)

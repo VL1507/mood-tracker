@@ -27,14 +27,15 @@ class LoginUserUseCase:
         self._token_service = token_service
 
     async def execute(self, input_dto: LoginUserInputDTO) -> LoginUserOutputDTO:
-        """Проверяет данные пользователя и возвращает пару токенов.
+        """
+        Проверяет данные пользователя и возвращает пару токенов.
+
+        Returns:
+            DTO с парой токенов.
 
         Raises:
             InvalidCredentialsError: отсутствие пользователя с данной почтой
             InvalidCredentialsError: неверный пароль
-
-        Returns:
-            DTO с парой токенов.
 
         """  # noqa: RUF002
         user = await self._user_repo.get_user_by_email(email=UserEmail(input_dto.email))

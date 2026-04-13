@@ -8,7 +8,8 @@ if TYPE_CHECKING:
 
 
 def setup_logging(env: Literal["dev", "prod"]) -> None:
-    """Настраивает формат логов.
+    """
+    Настраивает формат логов.
 
     Для dev цветные логи текстов, для prod структурированные json.
     """

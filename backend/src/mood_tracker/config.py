@@ -5,6 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DB(BaseModel):
+    """Конфиг базы данных."""
+
     USER: str
     PASSWORD: str
     HOST: str
@@ -13,6 +15,8 @@ class DB(BaseModel):
 
 
 class REDIS(BaseModel):
+    """Конфиг redis."""
+
     HOST: str
     PORT: int
     PASSWORD: str
@@ -20,6 +24,8 @@ class REDIS(BaseModel):
 
 # TODO: переименовать в AUTH потому что это не только jwt
 class JWT(BaseModel):
+    """Конфиг jwt."""
+
     ALGORITHM: str
     SECRET_KEY: str
     ACCESS_EXPIRE_SECONDS: int
@@ -27,11 +33,15 @@ class JWT(BaseModel):
 
 
 class APP(BaseModel):
+    """Конфиг приложения."""
+
     PORT: int
     ENV: Literal["dev", "prod"]
 
 
 class Config(BaseSettings):
+    """Конфиг всех конфигов."""
+
     DB: DB
     REDIS: REDIS
     JWT: JWT

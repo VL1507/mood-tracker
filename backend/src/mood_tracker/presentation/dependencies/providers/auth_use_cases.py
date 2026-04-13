@@ -12,6 +12,8 @@ from mood_tracker.application.auth.use_cases import (
 
 
 class AuthUseCasesProvider(Provider):
+    """Провайдер для всей Auth UseCase."""
+
     scope = Scope.REQUEST
 
     register_user = provide(RegisterUserUseCase)
