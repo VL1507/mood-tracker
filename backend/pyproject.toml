@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "argon2-cffi>=25.1.0",
-    "complexipy>=5.2.0",
     "dishka>=1.8.0",
     "fastapi>=0.135.1",
     "psycopg[binary]>=3.3.3",
@@ -21,6 +20,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "complexipy>=5.2.0",
     "cosmic-ray>=8.4.4",
     "hypothesis>=6.151.9",
     "mypy>=1.19.1",

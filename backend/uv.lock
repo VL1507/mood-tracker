@@ -195,7 +195,6 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "argon2-cffi" },
-    { name = "complexipy" },
     { name = "dishka" },
     { name = "fastapi" },
     { name = "psycopg", extra = ["binary"] },
@@ -210,6 +209,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "complexipy" },
     { name = "cosmic-ray" },
     { name = "hypothesis" },
     { name = "mypy" },
@@ -224,7 +224,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "argon2-cffi", specifier = ">=25.1.0" },
-    { name = "complexipy", specifier = ">=5.2.0" },
     { name = "dishka", specifier = ">=1.8.0" },
     { name = "fastapi", specifier = ">=0.135.1" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.3" },
@@ -239,6 +238,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "complexipy", specifier = ">=5.2.0" },
     { name = "cosmic-ray", specifier = ">=8.4.4" },
     { name = "hypothesis", specifier = ">=6.151.9" },
     { name = "mypy", specifier = ">=1.19.1" },
