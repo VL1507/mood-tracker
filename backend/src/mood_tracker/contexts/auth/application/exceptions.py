@@ -1,5 +1,4 @@
-class ApplicationError(Exception):
-    """Базовая ошибка для слоя Application."""
+from mood_tracker.shared.application.exceptions import ApplicationError
 
 
 class EmailAlreadyExistsError(ApplicationError):

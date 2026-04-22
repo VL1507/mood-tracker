@@ -1,5 +1,4 @@
-class DomainError(Exception):
-    """Базовая ошибка для доменного слоя."""
+from mood_tracker.shared.domain.exceptions import DomainError
 
 
 class InvalidEmailError(DomainError):
