@@ -6,9 +6,9 @@ from mood_tracker.contexts.auth.domain.repositories import IUserRepository
 from mood_tracker.contexts.auth.domain.value_objects import (
     PasswordHash,
     UserEmail,
-    UserID,
 )
 from mood_tracker.contexts.auth.infrastructure.persistence.models import UserORM
+from mood_tracker.shared.domain.value_objects import UserID
 
 
 class UserRepository(IUserRepository):

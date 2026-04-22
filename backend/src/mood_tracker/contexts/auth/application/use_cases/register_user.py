@@ -11,8 +11,8 @@ from mood_tracker.contexts.auth.domain.security import IPasswordHasher, ITokenSe
 from mood_tracker.contexts.auth.domain.value_objects import (
     PasswordHash,
     UserEmail,
-    UserID,
 )
+from mood_tracker.shared.domain.value_objects import UserID
 
 logger = structlog.stdlib.get_logger()
 

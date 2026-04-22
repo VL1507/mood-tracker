@@ -1,7 +1,8 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from mood_tracker.contexts.auth.domain.value_objects import TokenPair, UserID
+from mood_tracker.contexts.auth.domain.value_objects import TokenPair
+from mood_tracker.shared.domain.value_objects import UserID
 
 
 class ITokenService(Protocol):

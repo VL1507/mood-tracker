@@ -1,9 +1,6 @@
 from mood_tracker.contexts.auth.domain.entities import User
-from mood_tracker.contexts.auth.domain.value_objects import (
-    PasswordHash,
-    UserEmail,
-    UserID,
-)
+from mood_tracker.contexts.auth.domain.value_objects import PasswordHash, UserEmail
+from mood_tracker.shared.domain.value_objects import UserID
 
 
 def test_user_fields() -> None:

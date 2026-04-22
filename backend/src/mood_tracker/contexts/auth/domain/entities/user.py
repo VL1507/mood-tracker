@@ -1,10 +1,7 @@
 from dataclasses import dataclass
 
-from mood_tracker.contexts.auth.domain.value_objects import (
-    PasswordHash,
-    UserEmail,
-    UserID,
-)
+from mood_tracker.contexts.auth.domain.value_objects import PasswordHash, UserEmail
+from mood_tracker.shared.domain.value_objects import UserID
 
 
 @dataclass(slots=True)

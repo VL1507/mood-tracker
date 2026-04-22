@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, cast
 from redis.asyncio.client import Redis
 
 from mood_tracker.contexts.auth.domain.repositories import ITokenRepository
-from mood_tracker.contexts.auth.domain.value_objects import UserID
+from mood_tracker.shared.domain.value_objects import UserID
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable
