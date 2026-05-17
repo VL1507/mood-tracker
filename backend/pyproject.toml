@@ -32,18 +32,13 @@ dev = [
     "ty>=0.0.26",
 ]
 
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+[tool.uv]
+package = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-dir]
-"" = "src"
+pythonpath = ["src"]
+testpaths = ["src/tests"]
 
 [tool.mypy]
 strict = true
