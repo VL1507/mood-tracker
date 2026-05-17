@@ -1,0 +1,21 @@
+from dishka import (
+    Provider,
+    Scope,
+    provide,  # pyright: ignore[reportUnknownVariableType]
+)
+
+from mood_tracker.contexts.auth.application.use_cases import (
+    LoginUserUseCase,
+    RefreshUserUseCase,
+    RegisterUserUseCase,
+)
+
+
+class AuthUseCasesProvider(Provider):
+    """Провайдер для всей Auth UseCase."""
+
+    scope = Scope.REQUEST
+
+    register_user = provide(RegisterUserUseCase)
+    login_user = provide(LoginUserUseCase)
+    refresh_user = provide(RefreshUserUseCase)

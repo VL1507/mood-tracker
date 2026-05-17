@@ -1,0 +1,35 @@
+from dataclasses import dataclass
+
+from mood_tracker.contexts.auth.domain.value_objects import PasswordHash, UserEmail
+from mood_tracker.shared.domain.value_objects import UserID
+
+
+@dataclass(slots=True)
+class User:
+    """Доменная сущность пользователя (Entity DDD)."""
+
+    id: UserID
+    email: UserEmail
+    password_hash: PasswordHash
+
+    def __eq__(self, value: object) -> bool:
+        """
+        Сущности сравниваются по идентичности (DDD).
+
+        Returns:
+            Результат сравнения по self.id
+
+        """
+        if not isinstance(value, User):
+            return NotImplemented
+        return self.id == value.id
+
+    def __hash__(self) -> int:
+        """
+        Сущности хэшируются по идентичности (DDD).
+
+        Returns:
+            Хеш по self.id
+
+        """
+        return hash(self.id)
