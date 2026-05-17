@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
 from mood_tracker.config import Config
-from mood_tracker.presentation.api import (
+from mood_tracker.contexts.auth.presentation.api import (
     setup_exception_handlers,
     setup_routers,
 )
-from mood_tracker.presentation.api.middleware import setup_middleware
-from mood_tracker.presentation.dependencies import setup_di
+from mood_tracker.contexts.auth.presentation.api.middleware import setup_middleware
+from mood_tracker.contexts.auth.presentation.dependencies import setup_di
 
 
 def create_app() -> FastAPI:
